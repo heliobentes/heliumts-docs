@@ -9,7 +9,7 @@ export default function RootLayout({ children }: LayoutProps) {
     const router = useRouter();
 
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900">
+        <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col">
             <header className="border-b border-gray-300 bg-white sticky top-0 z-10 ">
                 <div className="container mx-auto px-4 flex items-stretch lg:gap-8 flex-col lg:flex-row h-full ">
                     <div className="py-2 flex items-center text-2xl font-medium gap-4">
@@ -37,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps) {
                         </Link>
                         <Link
                             href="https://github.com/heliobentes/heliumjs"
+                            target="_blank"
                             className={cn(
                                 "px-4 hover:bg-gray-50 h-full flex items-center transition-all border-b-3 hover:border-teal-600 text-gray-700 hover:text-teal-600 border-transparent"
                             )}
@@ -46,7 +47,20 @@ export default function RootLayout({ children }: LayoutProps) {
                     </nav>
                 </div>
             </header>
-            <main className="container mx-auto p-4">{children}</main>
+            <main className="container mx-auto flex-1">{children}</main>
+            <footer className="bg-white border-t border-gray-300 mt-10">
+                <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                    <div className="mb-4 md:mb-0">&copy; {new Date().getFullYear()} HeliumJS. Released under the MIT License.</div>
+                    <div className="flex gap-6">
+                        <Link href="https://github.com/heliobentes/heliumjs" className="hover:text-teal-600 transition-colors">
+                            GitHub
+                        </Link>
+                        <Link href="/docs" className="hover:text-teal-600 transition-colors">
+                            Documentation
+                        </Link>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }

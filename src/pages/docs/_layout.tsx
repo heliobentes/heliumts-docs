@@ -1,0 +1,149 @@
+import {
+    IconAppWindow,
+    IconBolt,
+    IconCloud,
+    IconCode,
+    IconDatabase,
+    IconDeviceDesktopCode,
+    IconExternalLink,
+    IconFileCode,
+    IconFolder,
+    IconMenu2,
+    IconRoute,
+    IconServer,
+    IconSettings,
+    IconShield,
+    IconTerminal,
+    IconWorld,
+    IconX,
+} from "@tabler/icons-react";
+import type { LayoutProps } from "helium/client";
+import { Link, useRouter } from "helium/client";
+import { useEffect, useState } from "react";
+
+import { cn } from "../../utils";
+
+const menuItems = [
+    {
+        title: "Getting Started",
+        items: [
+            {
+                title: "Introduction",
+                icon: IconBolt,
+                href: "/docs",
+            },
+            {
+                title: "Installation",
+                icon: IconDeviceDesktopCode,
+                href: "/docs/installation",
+            },
+            {
+                title: "Project Structure",
+                icon: IconFolder,
+                href: "/docs/project-structure",
+            },
+            {
+                title: (
+                    <>
+                        Example App <IconExternalLink size={16} />
+                    </>
+                ),
+                icon: IconAppWindow,
+                href: "https://github.com/heliobentes/heliumjs-example-app",
+                target: "_blank",
+            },
+        ],
+    },
+    {
+        title: "Core Concepts",
+        items: [
+            { title: "RPC", icon: IconServer, href: "/docs/rpc" },
+            { title: "Routing", icon: IconRoute, href: "/docs/routing" },
+            { title: "HTTP Handlers", icon: IconWorld, href: "/docs/http-handlers" },
+            { title: "Middleware", icon: IconCode, href: "/docs/middleware" },
+            { title: "Configuration", icon: IconSettings, href: "/docs/configuration" },
+            { title: "SSG", icon: IconFileCode, href: "/docs/ssg" },
+            { title: "Route Groups", icon: IconFolder, href: "/docs/route-groups" },
+        ],
+    },
+    {
+        title: "Advanced",
+        items: [
+            { title: "Context API", icon: IconDatabase, href: "/docs/context-api" },
+            { title: "Proxy Config", icon: IconShield, href: "/docs/proxy-configuration" },
+            { title: "Deployment", icon: IconCloud, href: "/docs/production-deployment" },
+        ],
+    },
+    {
+        title: "CLI Reference",
+        icon: IconTerminal,
+        href: "/docs/cli",
+    },
+];
+
+export default function DocsLayout({ children }: LayoutProps) {
+    const router = useRouter();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [router.path]);
+
+    return (
+        <div className="flex flex-col lg:flex-row gap-8 py-8 px-4">
+            <div className="lg:hidden mb-4">
+                <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                >
+                    {isMobileMenuOpen ? <IconX size={18} /> : <IconMenu2 size={18} />}
+                    {isMobileMenuOpen ? "Close Menu" : "Menu"}
+                </button>
+            </div>
+
+            <aside className={cn("w-full lg:w-56 shrink-0", isMobileMenuOpen ? "block" : "hidden lg:block")}>
+                <nav className="sticky top-24 space-y-8">
+                    {menuItems.map((section, i) => (
+                        <div key={i}>
+                            {section.items ? (
+                                <>
+                                    <h3 className="font-semibold text-gray-900 mb-3 px-3">{section.title}</h3>
+                                    <div className="space-y-1">
+                                        {section.items.map((item) => (
+                                            <Link
+                                                key={item.href}
+                                                href={item.href}
+                                                target={item.target}
+                                                className={cn(
+                                                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                                                    router.path === item.href ? "bg-teal-50 text-teal-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                                )}
+                                            >
+                                                <item.icon size={18} />
+                                                {item.title}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <Link
+                                    href={section.href}
+                                    className={cn(
+                                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                                        router.path === section.href ? "bg-teal-50 text-teal-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                    )}
+                                >
+                                    <section.icon size={18} />
+                                    {section.title}
+                                </Link>
+                            )}
+                        </div>
+                    ))}
+                </nav>
+            </aside>
+            <div className="flex-1 min-w-0">
+                <div className="prose prose-teal max-w-none">{children}</div>
+            </div>
+        </div>
+    );
+}

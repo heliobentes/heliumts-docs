@@ -1,10 +1,10 @@
 "use ssg";
 
-import { IconExternalLink } from "@tabler/icons-react";
+import { IconBolt, IconExternalLink, IconFileTypeTs, IconRoute, IconServer } from "@tabler/icons-react";
 import { Link } from "helium/client";
-import { Highlight, themes } from "prism-react-renderer";
 import { useState } from "react";
 
+import CodeBlock from "../components/CodeBlock";
 import { cn } from "../utils";
 
 const serverCode = `import { defineMethod } from "helium/server";
@@ -36,7 +36,7 @@ export default function TasksPage() {
 export default function Home() {
     const [file, setFile] = useState<string>("server");
     return (
-        <main className="space-y-6">
+        <main className="space-y-6 p-4">
             <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-16 lg:py-8">
                 <div className="flex flex-col justify-center items-center lg:items-start py-10 lg:col-span-3">
                     <span className="text-teal-600 text-sm font-medium text-center lg:text-left">🚀 Up to 3x faster than HTTP</span>
@@ -65,29 +65,17 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <Highlight theme={themes.oneDark} code={file === "server" ? serverCode : clientCode} language={file === "server" ? "ts" : "tsx"}>
-                        {({ style, tokens, getLineProps, getTokenProps }) => (
-                            <pre className="p-4 rounded-lg text-sm overflow-x-auto" style={style}>
-                                {tokens.map((line, i) => (
-                                    <div key={i} {...getLineProps({ line })}>
-                                        <span className="inline-block w-8 text-gray-500 select-none text-right mr-4">{i + 1}</span>
-                                        {line.map((token, key) => (
-                                            <span key={key} {...getTokenProps({ token })} />
-                                        ))}
-                                    </div>
-                                ))}
-                            </pre>
-                        )}
-                    </Highlight>
+                    <CodeBlock code={file === "server" ? serverCode : clientCode} language={file === "server" ? "ts" : "tsx"} />
                     <Link href="https://github.com/heliobentes/heliumjs-example-app" target="_blank" className="text-sm text-teal-600 hover:underline mt-4 ml-auto">
                         See working example <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                     </Link>
                 </div>
             </div>
-            <div className="mt-10">
+            <div className="pt-10 border-t border-gray-200">
                 <h2 className="text-3xl font-semibold text-center my-6">🚀 Up to 3x faster than HTTP</h2>
                 <p className="text-lg text-gray-500 text-center mt-2 max-w-3xl mx-auto">
-                    HeliumJS uses a binary protocol over WebSockets for RPC calls, significantly reducing latency and improving performance compared to traditional HTTP requests.
+                    HeliumJS replaces traditional HTTP requests with a high-performance binary protocol over WebSockets. By eliminating handshake overhead and minimizing payload
+                    size, it delivers significantly lower latency and superior throughput.
                 </p>
 
                 <div className="py-10 max-w-4xl mx-auto">
@@ -134,6 +122,37 @@ export default function Home() {
                         <Link href="/speed-test" className="button primary">
                             Test it yourself
                         </Link>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-16 border-t border-gray-200">
+                    <div className="flex flex-col items-center text-center">
+                        <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
+                            <IconBolt size={32} />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">Zero-API Boilerplate</h3>
+                        <p className="text-gray-500">Call server functions directly from your client components. No fetch, no axios, no glue code.</p>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                        <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
+                            <IconFileTypeTs size={32} />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">End-to-End Type Safety</h3>
+                        <p className="text-gray-500">Automatic type inference from server to client. If it compiles, it works.</p>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                        <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
+                            <IconRoute size={32} />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">File-based Routing</h3>
+                        <p className="text-gray-500">Intuitive file-system routing similar to Next.js Pages Router. Simple and effective.</p>
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                        <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
+                            <IconServer size={32} />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">Full-Stack Capabilities</h3>
+                        <p className="text-gray-500">Built-in support for SSG, custom HTTP handlers, middleware, and more.</p>
                     </div>
                 </div>
             </div>
