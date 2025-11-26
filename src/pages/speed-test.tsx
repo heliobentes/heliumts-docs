@@ -2,6 +2,18 @@ import { Link, useCall } from "helium/client";
 import { getTasks } from "helium/server";
 import { useState } from "react";
 
+const calculateFilteredAverage = (times: number[]) => {
+    if (times.length === 0) return 0;
+    const sorted = [...times].sort((a, b) => a - b);
+    const trimCount = Math.floor(times.length * 0.1); // Trim 10% from each end
+    const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
+
+    if (trimmed.length === 0) return 0;
+
+    const sum = trimmed.reduce((acc, curr) => acc + curr, 0);
+    return sum / trimmed.length;
+};
+
 export default function SpeedTest() {
     const { call: fetchTasks } = useCall(getTasks);
 
@@ -25,7 +37,7 @@ export default function SpeedTest() {
 
     const runTest = async () => {
         setIsRunning(true);
-        const iterations = 20;
+        const iterations = 100;
 
         // Initialize detailed results
         const initialDetails = Array.from({ length: iterations }, (_, i) => ({
@@ -44,8 +56,7 @@ export default function SpeedTest() {
             },
         ]);
 
-        let rpcTotalTime = 0;
-        let httpTotalTime = 0;
+        const rpcDurations: number[] = [];
 
         // Test RPC
         for (let i = 0; i < iterations; i++) {
@@ -53,7 +64,7 @@ export default function SpeedTest() {
             await fetchTasksViaRPC();
             const end = performance.now();
             const duration = end - start;
-            rpcTotalTime += duration;
+            rpcDurations.push(duration);
 
             setDetailedResults((prev) => {
                 const newResults = [...prev];
@@ -62,7 +73,7 @@ export default function SpeedTest() {
             });
         }
 
-        const rpcAvg = rpcTotalTime / iterations;
+        const rpcAvg = calculateFilteredAverage(rpcDurations);
 
         setResults([
             {
@@ -73,13 +84,15 @@ export default function SpeedTest() {
             },
         ]);
 
+        const httpDurations: number[] = [];
+
         // Test HTTP
         for (let i = 0; i < iterations; i++) {
             const start = performance.now();
             await fetchTasksViaHTTP();
             const end = performance.now();
             const duration = end - start;
-            httpTotalTime += duration;
+            httpDurations.push(duration);
 
             setDetailedResults((prev) => {
                 const newResults = [...prev];
@@ -88,7 +101,7 @@ export default function SpeedTest() {
             });
         }
 
-        const httpAvg = httpTotalTime / iterations;
+        const httpAvg = calculateFilteredAverage(httpDurations);
         const improvement = (httpAvg / rpcAvg).toFixed(1) + "x";
 
         setResults([
@@ -142,7 +155,7 @@ export default function SpeedTest() {
 
                     {detailedResults.length > 0 && (
                         <div className="overflow-x-auto">
-                            <h3 className="text-xl font-semibold mb-4">Detailed Results (20 requests)</h3>
+                            <h3 className="text-xl font-semibold mb-4">Detailed Results (100 requests)</h3>
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                                 <thead>
                                     <tr className="bg-gray-50 border-b border-gray-200">
