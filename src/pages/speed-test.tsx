@@ -2,10 +2,13 @@ import { Link, useCall } from "helium/client";
 import { getTasks } from "helium/server";
 import { useState } from "react";
 
+const iterations = 50;
+
 const calculateFilteredAverage = (times: number[]) => {
-    if (times.length === 0) return 0;
-    const sorted = [...times].sort((a, b) => a - b);
-    const trimCount = Math.floor(times.length * 0.1); // Trim 10% from each end
+    const validTimes = times.filter((t) => t >= 100);
+    if (validTimes.length === 0) return 0;
+    const sorted = [...validTimes].sort((a, b) => a - b);
+    const trimCount = Math.floor(validTimes.length * 0.1); // Trim 10% from each end
     const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
 
     if (trimmed.length === 0) return 0;
@@ -37,7 +40,6 @@ export default function SpeedTest() {
 
     const runTest = async () => {
         setIsRunning(true);
-        const iterations = 100;
 
         // Initialize detailed results
         const initialDetails = Array.from({ length: iterations }, (_, i) => ({
@@ -61,16 +63,24 @@ export default function SpeedTest() {
         // Test RPC
         for (let i = 0; i < iterations; i++) {
             const start = performance.now();
-            await fetchTasksViaRPC();
-            const end = performance.now();
-            const duration = end - start;
-            rpcDurations.push(duration);
+            try {
+                await fetchTasksViaRPC();
+                const end = performance.now();
+                const duration = end - start;
+                rpcDurations.push(duration);
 
-            setDetailedResults((prev) => {
-                const newResults = [...prev];
-                newResults[i] = { ...newResults[i], rpc: duration };
-                return newResults;
-            });
+                setDetailedResults((prev) => {
+                    const newResults = [...prev];
+                    newResults[i] = { ...newResults[i], rpc: duration };
+                    return newResults;
+                });
+            } catch {
+                setDetailedResults((prev) => {
+                    const newResults = [...prev];
+                    newResults[i] = { ...newResults[i], rpc: 0 };
+                    return newResults;
+                });
+            }
         }
 
         const rpcAvg = calculateFilteredAverage(rpcDurations);
@@ -89,20 +99,28 @@ export default function SpeedTest() {
         // Test HTTP
         for (let i = 0; i < iterations; i++) {
             const start = performance.now();
-            await fetchTasksViaHTTP();
-            const end = performance.now();
-            const duration = end - start;
-            httpDurations.push(duration);
+            try {
+                await fetchTasksViaHTTP();
+                const end = performance.now();
+                const duration = end - start;
+                httpDurations.push(duration);
 
-            setDetailedResults((prev) => {
-                const newResults = [...prev];
-                newResults[i] = { ...newResults[i], http: duration };
-                return newResults;
-            });
+                setDetailedResults((prev) => {
+                    const newResults = [...prev];
+                    newResults[i] = { ...newResults[i], http: duration };
+                    return newResults;
+                });
+            } catch {
+                setDetailedResults((prev) => {
+                    const newResults = [...prev];
+                    newResults[i] = { ...newResults[i], http: 0 };
+                    return newResults;
+                });
+            }
         }
 
         const httpAvg = calculateFilteredAverage(httpDurations);
-        const improvement = (httpAvg / rpcAvg).toFixed(1) + "x";
+        const improvement = rpcAvg > 0 ? (httpAvg / rpcAvg).toFixed(1) + "x" : "-";
 
         setResults([
             {
@@ -155,7 +173,7 @@ export default function SpeedTest() {
 
                     {detailedResults.length > 0 && (
                         <div className="overflow-x-auto">
-                            <h3 className="text-xl font-semibold mb-4">Detailed Results (100 requests)</h3>
+                            <h3 className="text-xl font-semibold mb-4">Detailed Results ({iterations} requests)</h3>
                             <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                                 <thead>
                                     <tr className="bg-gray-50 border-b border-gray-200">
