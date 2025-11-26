@@ -16,14 +16,25 @@ export default function Configuration() {
 const config: HeliumConfig = {
     trustProxyDepth: 1,  // Trust 1 proxy level (e.g., Vercel)
     rpc: {
+        // Transport mode: "websocket" | "http" | "auto"
+        transport: "websocket",  // default
+        
+        // Auto-switch to HTTP on mobile/cellular networks
+        // Mobile carriers prioritize HTTP traffic over WebSocket
+        autoHttpOnMobile: false, // default
+        
+        // Message encoding: "msgpack" | "json" (default: "msgpack")
         encoding: "msgpack",  // or "json"
+
+        // Compression settings
         compression: {
             enabled: true,
             threshold: 1024,
         },
+        // Security settings
         security: {
             maxConnectionsPerIP: 10,
-            maxMessagesPerWindow: 100,
+            maxMessagesPerWindow: 200,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },
