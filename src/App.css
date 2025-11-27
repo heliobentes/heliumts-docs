@@ -21,6 +21,6 @@
         }
     }
     code {
-        @apply bg-gray-300 rounded-full px-2.5 py-0.5 font-mono text-sm;
+        @apply bg-gray-300 rounded-full px-2.5 py-0.5 font-mono text-sm text-gray-700 whitespace-nowrap;
     }
 }

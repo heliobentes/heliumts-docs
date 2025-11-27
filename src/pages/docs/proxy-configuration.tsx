@@ -47,7 +47,7 @@ export default config;`}
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8">Common Deployment Scenarios</h2>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6">Vercel / Netlify / Railway</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mt-6">Vercel / Netlify / Railway / DigitalOcean APPs</h3>
             <p>
                 <code>trustProxyDepth: 1</code>
             </p>

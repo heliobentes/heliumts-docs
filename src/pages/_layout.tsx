@@ -12,7 +12,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col">
             <header className="border-b border-gray-300 bg-white sticky top-0 z-10 ">
                 <div className="container mx-auto px-4 flex items-stretch lg:gap-8 flex-col lg:flex-row h-full ">
-                    <div className="py-2 flex items-center text-2xl font-medium gap-4">
+                    <div className="py-2 flex items-center text-2xl font-medium gap-3 cursor-pointer hover:opacity-70" onClick={() => router.push("/")}>
                         <HeliumLogo />
                         HeliumJS
                     </div>

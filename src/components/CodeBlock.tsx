@@ -1,6 +1,6 @@
+import { IconCheck, IconCopy } from "@tabler/icons-react";
 import { Highlight, themes } from "prism-react-renderer";
 import { useState } from "react";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
 
 interface CodeBlockProps {
     code: string;

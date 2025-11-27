@@ -3,8 +3,8 @@ import type { HeliumConfig } from "helium/server";
 const config: HeliumConfig = {
     trustProxyDepth: 1, // Trust 1 proxy level (e.g., Vercel)
     rpc: {
-        transport: "auto",
-        autoHttpOnMobile: true,
+        transport: "websocket",
+        autoHttpOnMobile: false,
         compression: {
             enabled: true,
             threshold: 1024,

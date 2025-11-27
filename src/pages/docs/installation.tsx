@@ -48,6 +48,21 @@ export default function App({ Component, pageProps }: AppShellProps) {
                 language="tsx"
             />
 
+            <h3 className="text-xl font-semibold text-gray-900 mt-6">6. Create the server and pages folders</h3>
+            <p>
+                Create <code>src/server</code> and <code>src/pages</code> folders to hold your server-side logic and client-side pages, respectively.
+            </p>
+
+            <div className="prose prose-teal max-w-none">
+                <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">
+                    <strong>Note:</strong>
+                    <p>
+                        For your RPC methods to be type-safe and your IDE recognize Helium imports, make sure you are running the development server with{" "}
+                        <code>npx helium dev</code> as described below.
+                    </p>
+                </div>
+            </div>
+
             <h2 className="text-2xl font-semibold text-gray-900 mt-8">Running the Development Server</h2>
             <CodeBlock code="npx helium dev" language="bash" />
 
