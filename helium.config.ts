@@ -3,7 +3,7 @@ import type { HeliumConfig } from "helium/server";
 const config: HeliumConfig = {
     trustProxyDepth: 1, // Trust 1 proxy level (e.g., Vercel)
     rpc: {
-        transport: "websocket",
+        transport: "auto",
         autoHttpOnMobile: true,
         encoding: "msgpack",
         compression: {

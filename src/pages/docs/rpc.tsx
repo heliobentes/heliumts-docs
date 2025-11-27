@@ -60,6 +60,41 @@ export default function TasksPage() {
 }`}
                 language="typescript"
             />
+
+            <h2 className="text-2xl font-semibold text-gray-900 mt-8">Real-time web APP</h2>
+            <div>
+                <p>Changing the useFetch TTL setting to a low number ({"<"}2 seconds) you can convert your app into a real-time web app.</p>
+                <p>This will make the data refresh automatically at the specified interval, providing a real-time experience if the data is updated remotely.</p>
+            </div>
+            <CodeBlock
+                code={`import { useFetch, useCall } from "helium/client";
+import { getTasks, createTask } from "helium/server";
+
+export default function TasksPage() {
+    // Fetch data (auto-runs on mount)
+    // Data is typed based on server method return type
+    const { data, isLoading } = useFetch(getTasks, 
+        { status: "open" }, 
+        { ttl: 1000 } // Refresh data every 1 second
+    ); 
+    
+    // Mutation (callable function)
+    // The call function is typed based on server method args and return type
+    const { call: add, isCalling } = useCall(createTask, {
+        invalidate: [getTasks] // Auto-refresh getTasks after success everywhere it's used
+        });
+        
+        return (
+            <div>
+                <button onClick={() => add({ name: "New Task" })}>
+                    {isCalling ? "Adding..." : "Add Task"}
+                </button>
+                {data?.map(task => <div key={task.id}>{task.name}</div>)}
+            </div>
+        );
+}`}
+                language="typescript"
+            />
         </div>
     );
 }
