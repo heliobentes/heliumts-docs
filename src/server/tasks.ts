@@ -21,18 +21,15 @@ const generateTasks = () => {
     }
     return tasks as Task[];
 };
+const tasks = generateTasks();
 
 export const getTasks = defineMethod(async () => {
-    const tasks = generateTasks();
-
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     return tasks;
 });
 
 export const getTasksByHttp = defineHTTPRequest("GET", "/api/get-tasks", async () => {
-    const tasks = generateTasks();
-
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     return tasks;
