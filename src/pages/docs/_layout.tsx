@@ -2,6 +2,7 @@ import {
     IconAppWindow,
     IconBolt,
     IconCloud,
+    IconCloudDollar,
     IconCode,
     IconDatabase,
     IconDeviceDesktopCode,
@@ -13,6 +14,7 @@ import {
     IconServer,
     IconSettings,
     IconShield,
+    IconSparkles,
     IconTerminal,
     IconWorld,
     IconX,
@@ -30,17 +32,17 @@ const menuItems = [
             {
                 title: "Introduction",
                 icon: IconBolt,
-                href: "/docs",
+                href: "/docs/getting-started",
             },
             {
                 title: "Installation",
                 icon: IconDeviceDesktopCode,
-                href: "/docs/installation",
+                href: "/docs/getting-started/installation",
             },
             {
                 title: "Project Structure",
                 icon: IconFolder,
-                href: "/docs/project-structure",
+                href: "/docs/getting-started/project-structure",
             },
             {
                 title: (
@@ -57,21 +59,28 @@ const menuItems = [
     {
         title: "Core Concepts",
         items: [
-            { title: "RPC", icon: IconServer, href: "/docs/rpc" },
-            { title: "Routing", icon: IconRoute, href: "/docs/routing" },
-            { title: "HTTP Handlers", icon: IconWorld, href: "/docs/http-handlers" },
-            { title: "Middleware", icon: IconCode, href: "/docs/middleware" },
-            { title: "Configuration", icon: IconSettings, href: "/docs/configuration" },
-            { title: "SSG", icon: IconFileCode, href: "/docs/ssg" },
-            { title: "Route Groups", icon: IconFolder, href: "/docs/route-groups" },
+            { title: "RPC", icon: IconServer, href: "/docs/core-concepts/rpc" },
+            { title: "Routing", icon: IconRoute, href: "/docs/core-concepts/routing" },
+            { title: "HTTP Handlers", icon: IconWorld, href: "/docs/core-concepts/http-handlers" },
+            { title: "Middleware", icon: IconCode, href: "/docs/core-concepts/middleware" },
+            { title: "Configuration", icon: IconSettings, href: "/docs/core-concepts/configuration" },
+            { title: "SSG", icon: IconFileCode, href: "/docs/core-concepts/ssg" },
+        ],
+    },
+    {
+        title: "Guides",
+        items: [
+            { title: "Authentication", icon: IconShield, href: "/docs/guides/authentication" },
+            { title: "Stripe Integration", icon: IconCloudDollar, href: "/docs/guides/stripe" },
+            { title: "OpenAI API", icon: IconSparkles, href: "/docs/guides/openai" },
         ],
     },
     {
         title: "Advanced",
         items: [
-            { title: "Context API", icon: IconDatabase, href: "/docs/context-api" },
-            { title: "Proxy Config", icon: IconShield, href: "/docs/proxy-configuration" },
-            { title: "Deployment", icon: IconCloud, href: "/docs/production-deployment" },
+            { title: "Context API", icon: IconDatabase, href: "/docs/advanced/context-api" },
+            { title: "Proxy Config", icon: IconShield, href: "/docs/advanced/proxy-configuration" },
+            { title: "Deployment", icon: IconCloud, href: "/docs/advanced/production-deployment" },
         ],
     },
     {

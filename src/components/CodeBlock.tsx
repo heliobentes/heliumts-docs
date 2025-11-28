@@ -30,7 +30,7 @@ export default function CodeBlock({ code, language }: CodeBlockProps) {
                     <pre className="p-4 rounded-lg text-sm overflow-x-auto" style={style}>
                         {tokens.map((line, i) => (
                             <div key={i} {...getLineProps({ line })}>
-                                <span className="inline-block w-8 text-gray-500 select-none text-right mr-4">{language === "bash" ? "%" : i + 1}</span>
+                                <span className="inline-block w-4 md:w-8 text-gray-500 select-none text-right mr-4">{language === "bash" ? "%" : i + 1}</span>
                                 {line.map((token, key) => (
                                     <span key={key} {...getTokenProps({ token })} />
                                 ))}

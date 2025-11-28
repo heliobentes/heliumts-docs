@@ -1,5 +1,5 @@
 "use ssg";
-import CodeBlock from "../../components/CodeBlock";
+import CodeBlock from "../../../components/CodeBlock";
 
 export default function Configuration() {
     return (
