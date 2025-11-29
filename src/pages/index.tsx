@@ -68,7 +68,7 @@ export default function Home() {
                     </div>
 
                     <CodeBlock code={file === "server" ? serverCode : clientCode} language={file === "server" ? "ts" : "tsx"} />
-                    <Link href="https://github.com/heliobentes/heliumts/-example-app" target="_blank" className="text-sm text-teal-600 hover:underline mt-4 ml-auto">
+                    <Link href="https://github.com/heliobentes/heliumts-example-app" target="_blank" className="text-sm text-teal-600 hover:underline mt-4 ml-auto">
                         See working example <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                     </Link>
                 </div>

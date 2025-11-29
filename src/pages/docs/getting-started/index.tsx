@@ -8,7 +8,7 @@ export default function Introduction() {
             <div className="bg-teal-50 border border-teal-200 rounded-lg p-6 my-6">
                 <h3 className="text-lg font-semibold text-teal-900 mb-2">Check out the Example App</h3>
                 <p className="text-teal-800 mb-4">See HeliumTS in action with a fully functional example application including authentication, database integration, and more.</p>
-                <a href="https://github.com/heliobentes/heliumts/-example-app" target="_blank" rel="noopener noreferrer" className="button primary">
+                <a href="https://github.com/heliobentes/heliumts-example-app" target="_blank" rel="noopener noreferrer" className="button primary">
                     View Example on GitHub &rarr;
                 </a>
             </div>

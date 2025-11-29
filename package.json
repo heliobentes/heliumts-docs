@@ -13,7 +13,7 @@
     "dependencies": {
         "@tabler/icons-react": "^3.35.0",
         "@tailwindcss/vite": "^4.1.17",
-        "heliumts": "^0.2.4",
+        "heliumts": "^0.2.5",
         "prism-react-renderer": "^2.4.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",

@@ -23,8 +23,8 @@ The documentation site is built using:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/heliobentes/heliumts/-docs.git
-    cd heliumts/-docs
+    git clone https://github.com/heliobentes/heliumts-docs.git
+    cd heliumts-docs
     ```
 
 2. Install dependencies:

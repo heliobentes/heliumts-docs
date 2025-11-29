@@ -72,7 +72,7 @@ const menuItems: MenuSection[] = [
                     </>
                 ),
                 icon: IconAppWindow,
-                href: "https://github.com/heliobentes/heliumts/-example-app",
+                href: "https://github.com/heliobentes/heliumts-example-app",
                 target: "_blank",
             },
         ],
