@@ -14,7 +14,7 @@ export default function RPC() {
                 <code>src/server/tasks.ts</code>
             </p>
             <CodeBlock
-                code={`import { defineMethod } from "helium/server";
+                code={`import { defineMethod } from "heliumts/server";
 
 // Getting tasks
 export const getTasks = defineMethod(async (args: { status: string }) => {
@@ -35,8 +35,8 @@ export const createTask = defineMethod(async (args: { name: string }) => {
                 <code>src/pages/tasks.tsx</code>
             </p>
             <CodeBlock
-                code={`import { useFetch, useCall } from "helium/client";
-import { getTasks, createTask } from "helium/server";
+                code={`import { useFetch, useCall } from "heliumts/client";
+import { getTasks, createTask } from "heliumts/server";
 
 export default function TasksPage() {
     // Fetch data (auto-runs on mount)

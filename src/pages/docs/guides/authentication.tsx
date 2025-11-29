@@ -7,7 +7,7 @@ export default function AuthenticationGuide() {
             <h1 className="text-3xl font-bold text-gray-900">Authentication</h1>
 
             <p>
-                This guide shows how to integrate authentication with HeliumJS using Better Auth. The same pattern works for other auth libraries like Auth.js, Clerk, or any
+                This guide shows how to integrate authentication with HeliumTS using Better Auth. The same pattern works for other auth libraries like Auth.js, Clerk, or any
                 provider that uses standard Web API Request/Response objects.
             </p>
 
@@ -70,7 +70,7 @@ export const auth = betterAuth({
                     <code>src/server/auth.ts</code>
                 </p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { auth } from "../libs/better-auth/auth";
 
 // This handles all auth routes: /api/auth/signin, /api/auth/signout, 
@@ -113,7 +113,7 @@ export async function middleware(ctx: HeliumContext) {
 
                 <p className="mt-4">Now your RPC functions automatically have access to the authenticated user:</p>
                 <CodeBlock
-                    code={`import { defineRPC } from "helium/server";
+                    code={`import { defineRPC } from "heliumts/server";
 
 export const getProfile = defineRPC(async (ctx) => {
     // ctx.user is available thanks to middleware
@@ -194,7 +194,7 @@ export default function LoginPage() {
 
                 <h3 className="text-lg font-semibold text-gray-900 mt-4">Auth.js (NextAuth)</h3>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { handlers } from "./auth"; // Your Auth.js config
 
 export const authHandler = defineHTTPRequest("ALL", "/api/auth/*", async (req, ctx) => {
@@ -206,7 +206,7 @@ export const authHandler = defineHTTPRequest("ALL", "/api/auth/*", async (req, c
 
                 <h3 className="text-lg font-semibold text-gray-900 mt-4">Clerk</h3>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { clerkClient } from "@clerk/clerk-sdk-node";
 
 export const clerkWebhook = defineHTTPRequest("POST", "/webhooks/clerk", async (req, ctx) => {

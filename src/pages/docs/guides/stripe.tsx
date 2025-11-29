@@ -6,7 +6,7 @@ export default function StripeGuide() {
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900">Stripe Webhooks</h1>
 
-            <p>This guide shows how to handle Stripe webhooks with HeliumJS.</p>
+            <p>This guide shows how to handle Stripe webhooks with HeliumTS.</p>
 
             <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-900">Setup</h2>
@@ -24,7 +24,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...`}
                 <h2 className="text-xl font-semibold text-gray-900">Webhook Handler</h2>
                 <p>Handle Stripe webhooks to process events like successful payments:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

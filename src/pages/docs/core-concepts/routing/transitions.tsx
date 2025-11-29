@@ -39,7 +39,7 @@ export default function PageTransitions() {
                     The <code>PageTransition</code> component handles all navigation transition complexity with a simple API:
                 </p>
                 <CodeBlock
-                    code={`import { PageTransition } from "helium/client";
+                    code={`import { PageTransition } from "heliumts/client";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     For more control, the <code>useDeferredNavigation</code> hook integrates <code>useDeferredValue</code> and <code>useTransition</code> with the router:
                 </p>
                 <CodeBlock
-                    code={`import { useDeferredNavigation } from "helium/client";
+                    code={`import { useDeferredNavigation } from "heliumts/client";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { isStale, isPending, isTransitioning } = useDeferredNavigation();
@@ -141,7 +141,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <p>Create a top loading bar that shows during navigation:</p>
                 <CodeBlock
                     code={`// src/components/NavigationLoader.tsx
-import { useRouter } from "helium/client";
+import { useRouter } from "heliumts/client";
 
 export default function NavigationLoader() {
     const router = useRouter();
@@ -163,7 +163,7 @@ export default function NavigationLoader() {
                 <CodeBlock
                     code={`// src/pages/_layout.tsx
 import NavigationLoader from "../components/NavigationLoader";
-import { PageTransition } from "helium/client";
+import { PageTransition } from "heliumts/client";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -187,7 +187,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     Use <code>router.isPending</code> to show visual feedback when content is stale:
                 </p>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const router = useRouter();

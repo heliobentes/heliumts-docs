@@ -1,5 +1,5 @@
 "use ssg";
-import { Link } from "helium/client";
+import { Link } from "heliumts/client";
 
 import CodeBlock from "../../../../components/CodeBlock";
 
@@ -11,7 +11,7 @@ export default function RoutingOverview() {
             <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-gray-900">Overview</h2>
                 <p>
-                    HeliumJS uses file-based routing similar to Next.js Pages Router. Pages are automatically mapped to routes based on their file path in the{" "}
+                    HeliumTS uses file-based routing similar to Next.js Pages Router. Pages are automatically mapped to routes based on their file path in the{" "}
                     <code>src/pages</code> directory. The framework provides a powerful routing system with support for dynamic routes, catch-all routes, layouts, and route groups.
                 </p>
 
@@ -89,7 +89,7 @@ export default function RoutingOverview() {
                 <p className="font-semibold">Example usage:</p>
                 <CodeBlock
                     code={`// src/pages/users/[id].tsx
-import { useRouter } from "helium/client";
+import { useRouter } from "heliumts/client";
 
 export default function UserPage() {
     const router = useRouter();
@@ -114,7 +114,7 @@ export default function UserPage() {
                 <p className="font-semibold">Example usage:</p>
                 <CodeBlock
                     code={`// src/pages/docs/[...slug].tsx
-import { useRouter } from "helium/client";
+import { useRouter } from "heliumts/client";
 
 export default function DocsPage() {
     const router = useRouter();

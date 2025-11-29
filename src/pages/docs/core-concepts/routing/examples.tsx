@@ -1,5 +1,5 @@
 "use ssg";
-import { Link } from "helium/client";
+import { Link } from "heliumts/client";
 
 import CodeBlock from "../../../../components/CodeBlock";
 
@@ -14,8 +14,8 @@ export default function RoutingExamples() {
                 <CodeBlock
                     code={`// src/pages/blog/[slug].tsx
 "use ssg";
-import { useRouter, Link } from "helium/client";
-import { GetStaticPaths, GetStaticProps } from "helium/rsc";
+import { useRouter, Link } from "heliumts/client";
+import { GetStaticPaths, GetStaticProps } from "heliumts/rsc";
 
 interface BlogPost {
     slug: string;
@@ -60,7 +60,7 @@ export default function BlogPost({ post }: { post: BlogPost }) {
                 <p>Handle search queries using URL parameters:</p>
                 <CodeBlock
                     code={`// src/pages/search.tsx
-import { useRouter, Link } from "helium/client";
+import { useRouter, Link } from "heliumts/client";
 import { useState, useEffect } from "react";
 
 export default function SearchPage() {
@@ -126,7 +126,7 @@ export default function SearchPage() {
                 <p>Protect routes with authentication using the Redirect component:</p>
                 <CodeBlock
                     code={`// src/components/AuthGuard.tsx
-import { Redirect } from "helium/client";
+import { Redirect } from "heliumts/client";
 import { useAuth } from "../hooks/useAuth";
 
 interface AuthGuardProps {
@@ -171,7 +171,7 @@ export default function Dashboard() {
                 <p>Build breadcrumbs based on the current route:</p>
                 <CodeBlock
                     code={`// src/components/Breadcrumbs.tsx
-import { useRouter, Link } from "helium/client";
+import { useRouter, Link } from "heliumts/client";
 
 export default function Breadcrumbs() {
     const router = useRouter();
@@ -219,7 +219,7 @@ export default function Breadcrumbs() {
                 <p>Track page views using router events:</p>
                 <CodeBlock
                     code={`// src/components/Analytics.tsx
-import { useRouter } from "helium/client";
+import { useRouter } from "heliumts/client";
 import { useEffect } from "react";
 
 export default function Analytics() {
@@ -255,7 +255,7 @@ function trackPageView(path: string) {
                 <CodeBlock
                     code={`// src/pages/_layout.tsx
 import Analytics from "../components/Analytics";
-import { PageTransition } from "helium/client";
+import { PageTransition } from "heliumts/client";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -276,7 +276,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <p>Show a progress bar during page transitions:</p>
                 <CodeBlock
                     code={`// src/components/NavigationProgress.tsx
-import { useRouter } from "helium/client";
+import { useRouter } from "heliumts/client";
 import { useEffect, useState } from "react";
 
 export default function NavigationProgress() {

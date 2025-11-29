@@ -25,8 +25,8 @@ import {
     IconWorld,
     IconX,
 } from "@tabler/icons-react";
-import type { LayoutProps } from "helium/client";
-import { Link, useRouter } from "helium/client";
+import type { LayoutProps } from "heliumts/client";
+import { Link, useRouter } from "heliumts/client";
 import { useEffect, useState } from "react";
 
 import { cn } from "../../utils";
@@ -72,7 +72,7 @@ const menuItems: MenuSection[] = [
                     </>
                 ),
                 icon: IconAppWindow,
-                href: "https://github.com/heliobentes/heliumjs-example-app",
+                href: "https://github.com/heliobentes/heliumts/-example-app",
                 target: "_blank",
             },
         ],
@@ -267,8 +267,8 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">
                         <strong>Note:</strong>
                         <p>
-                            HeliumJS is under pre-beta and active development. Expect bugs and breaking changes. If you find any issues, please report them in{" "}
-                            <a href="https://github.com/heliobentes/heliumjs/issues" target="_blank" className="underline hover:text-yellow-900">
+                            HeliumTS is under pre-beta and active development. Expect bugs and breaking changes. If you find any issues, please report them in{" "}
+                            <a href="https://github.com/heliobentes/heliumts//issues" target="_blank" className="underline hover:text-yellow-900">
                                 our GitHub <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                             </a>
                         </p>

@@ -1,11 +1,12 @@
-# HeliumJS Documentation
+# HeliumTS Documentation
 
-This repository contains the source code for the official documentation of [HeliumJS](https://github.com/heliobentes/heliumjs).
+This repository contains the source code for the official documentation of [HeliumTS](https://github.com/heliobentes/heliumts/).
 
 ## Overview
 
 The documentation site is built using:
-- **HeliumJS**: The framework itself.
+
+- **HeliumTS**: The framework itself.
 - **React**: UI library.
 - **Vite**: Build tool.
 - **TailwindCSS**: Styling.
@@ -20,15 +21,16 @@ The documentation site is built using:
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/heliobentes/heliumjs-docs.git
-   cd heliumjs-docs
-   ```
+
+    ```bash
+    git clone https://github.com/heliobentes/heliumts/-docs.git
+    cd heliumts/-docs
+    ```
 
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 ### Development
 
@@ -57,6 +59,6 @@ npm run start
 ## Project Structure
 
 - `src/pages/`: Contains the application routes and documentation pages.
-  - `docs/`: Documentation content pages (CLI, Configuration, Routing, etc.).
+    - `docs/`: Documentation content pages (CLI, Configuration, Routing, etc.).
 - `src/components/`: Reusable UI components.
 - `helium.config.ts`: Configuration for the Helium server.

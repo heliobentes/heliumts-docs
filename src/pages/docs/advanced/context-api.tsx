@@ -27,7 +27,7 @@ export default function ContextAPI() {
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8">Usage in RPC Methods</h2>
             <CodeBlock
-                code={`import { defineMethod } from "helium/server";
+                code={`import { defineMethod } from "heliumts/server";
 
 export const getClientInfo = defineMethod(async (args, ctx) => {
     // Access client IP (extracted based on trustProxyDepth configuration)
@@ -51,7 +51,7 @@ export const getClientInfo = defineMethod(async (args, ctx) => {
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8">Usage in HTTP Handlers</h2>
             <CodeBlock
-                code={`import { defineHTTPRequest } from "helium/server";
+                code={`import { defineHTTPRequest } from "heliumts/server";
 
 export const apiEndpoint = defineHTTPRequest("POST", "/api/data", async (req, ctx) => {
     // Access client IP
@@ -73,7 +73,7 @@ export const apiEndpoint = defineHTTPRequest("POST", "/api/data", async (req, ct
             <h2 className="text-2xl font-semibold text-gray-900 mt-8">Custom Context Properties</h2>
             <p>Middleware can add custom properties to the context:</p>
             <CodeBlock
-                code={`import { middleware } from "helium/server";
+                code={`import { middleware } from "heliumts/server";
 
 export const authMiddleware = middleware(async (context, next) => {
     // Add custom property

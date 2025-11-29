@@ -11,7 +11,7 @@ export default function Configuration() {
                 <code>helium.config.ts</code>
             </p>
             <CodeBlock
-                code={`import type { HeliumConfig } from "helium/server";
+                code={`import type { HeliumConfig } from "heliumts/server";
 
 const config: HeliumConfig = {
     trustProxyDepth: 1,  // Trust 1 proxy level (e.g., Vercel)

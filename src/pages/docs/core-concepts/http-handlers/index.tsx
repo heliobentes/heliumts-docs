@@ -1,5 +1,5 @@
 "use ssg";
-import { Link } from "helium/client";
+import { Link } from "heliumts/client";
 
 import CodeBlock from "../../../../components/CodeBlock";
 
@@ -11,7 +11,7 @@ export default function HttpHandlersOverview() {
             <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-gray-900">Overview</h2>
                 <p>
-                    HeliumJS provides <code>defineHTTPRequest</code> for creating custom HTTP endpoints. This is useful for:
+                    HeliumTS provides <code>defineHTTPRequest</code> for creating custom HTTP endpoints. This is useful for:
                 </p>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                     <li>Webhooks (Stripe, GitHub, etc.)</li>
@@ -37,7 +37,7 @@ export default function HttpHandlersOverview() {
             <section className="space-y-4">
                 <h2 className="text-2xl font-semibold text-gray-900">Basic Usage</h2>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 
 export const myEndpoint = defineHTTPRequest("GET", "/api/hello", async (req, ctx) => {
     return { message: "Hello World" };
@@ -76,7 +76,7 @@ export const getProduct = defineHTTPRequest("GET", "/api/products/:category/:id"
                     Use <code>*</code> to match any remaining path segments (useful for auth providers):
                 </p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { auth } from "./auth"; // Better Auth or similar
 
 // Matches /api/auth/signin, /api/auth/signout, /api/auth/callback/google, etc.
@@ -241,7 +241,7 @@ export const errorExample = defineHTTPRequest("POST", "/api/resource", async (re
                     Use <code>toWebRequest()</code> to convert Helium's request to a standard Web API <code>Request</code> for third-party libraries:
                 </p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { auth } from "./auth"; // Better Auth or similar
 
 export const authHandler = defineHTTPRequest("ALL", "/auth/*", async (req, ctx) => {

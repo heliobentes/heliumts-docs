@@ -11,7 +11,7 @@ export default function Middleware() {
                 <code>src/server/_middleware.ts</code>
             </p>
             <CodeBlock
-                code={`import { middleware } from "helium/server";
+                code={`import { middleware } from "heliumts/server";
 
 export default middleware(async (ctx, next) => {
     console.log("Request received");

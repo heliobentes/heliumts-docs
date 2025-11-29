@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import helium from "helium/vite";
+import heliumts from "heliumts/vite";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react(), helium(), tailwindcss()],
+    plugins: [react(), heliumts(), tailwindcss()],
     server: {
         port: 3000,
     },

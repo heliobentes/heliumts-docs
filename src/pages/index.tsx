@@ -1,13 +1,13 @@
 "use ssg";
 
 import { IconBolt, IconExternalLink, IconFileTypeTs, IconRoute, IconServer } from "@tabler/icons-react";
-import { Link } from "helium/client";
+import { Link } from "heliumts/client";
 import { useState } from "react";
 
 import CodeBlock from "../components/CodeBlock";
 import { cn } from "../utils";
 
-const serverCode = `import { defineMethod } from "helium/server";
+const serverCode = `import { defineMethod } from "heliumts/server";
 
 export const getTasks = defineMethod(async (args?: { status?: string }) => {
     const filter = args?.status ? { status: args.status } : {};
@@ -16,8 +16,8 @@ export const getTasks = defineMethod(async (args?: { status?: string }) => {
     return tasks;
 });`;
 
-const clientCode = `import { useFetch } from "helium/client";
-import { getTasks } from "helium/server";
+const clientCode = `import { useFetch } from "heliumts/client";
+import { getTasks } from "heliumts/server";
 
 export default function TasksPage() {
     const { data: tasks } = useFetch(getTasks, {
@@ -68,7 +68,7 @@ export default function Home() {
                     </div>
 
                     <CodeBlock code={file === "server" ? serverCode : clientCode} language={file === "server" ? "ts" : "tsx"} />
-                    <Link href="https://github.com/heliobentes/heliumjs-example-app" target="_blank" className="text-sm text-teal-600 hover:underline mt-4 ml-auto">
+                    <Link href="https://github.com/heliobentes/heliumts/-example-app" target="_blank" className="text-sm text-teal-600 hover:underline mt-4 ml-auto">
                         See working example <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                     </Link>
                 </div>
@@ -76,7 +76,7 @@ export default function Home() {
             <div className="pt-10 border-t border-gray-200">
                 <h2 className="text-3xl font-semibold text-center my-6">🚀 Up to 2x faster than HTTP</h2>
                 <p className="text-lg text-gray-500 text-center mt-2 max-w-3xl mx-auto">
-                    HeliumJS replaces traditional HTTP requests with a high-performance binary protocol over WebSockets. By eliminating handshake overhead and minimizing payload
+                    HeliumTS replaces traditional HTTP requests with a high-performance binary protocol over WebSockets. By eliminating handshake overhead and minimizing payload
                     size, it delivers significantly lower latency and superior throughput.
                 </p>
 

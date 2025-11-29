@@ -15,7 +15,7 @@ export default function ProxyConfiguration() {
                 Use the <code>trustProxyDepth</code> setting in your <code>helium.config.ts</code>:
             </p>
             <CodeBlock
-                code={`import type { HeliumConfig } from "helium/server";
+                code={`import type { HeliumConfig } from "heliumts/server";
 
 const config: HeliumConfig = {
     trustProxyDepth: 1, // Set based on your deployment

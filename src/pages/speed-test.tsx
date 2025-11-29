@@ -1,5 +1,5 @@
-import { Link, useCall } from "helium/client";
-import { getTasks } from "helium/server";
+import { Link, useCall } from "heliumts/client";
+import { getTasks } from "heliumts/server";
 import { useState } from "react";
 
 const iterations = 50;

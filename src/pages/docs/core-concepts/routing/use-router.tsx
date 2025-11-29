@@ -14,7 +14,7 @@ export default function UseRouter() {
                 </p>
 
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 
 export default function MyComponent() {
     const router = useRouter();
@@ -196,7 +196,7 @@ useEffect(() => {
                 <h3 className="text-xl font-semibold text-gray-900">Navigation Event</h3>
                 <p>Fires after navigation completes:</p>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 import { useEffect } from "react";
 
 export default function Analytics() {
@@ -219,7 +219,7 @@ export default function Analytics() {
                 <h3 className="text-xl font-semibold text-gray-900">Before Navigation Event</h3>
                 <p>Fires before navigation and can be prevented:</p>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 import { useEffect, useState } from "react";
 
 export default function UnsavedChangesGuard() {
@@ -253,7 +253,7 @@ export default function UnsavedChangesGuard() {
 
                 <h3 className="text-xl font-semibold text-gray-900">Typing Route Params</h3>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 
 type UserPageParams = {
     id: string;
@@ -271,7 +271,7 @@ export default function UserPage() {
 
                 <h3 className="text-xl font-semibold text-gray-900">Typing Search Params</h3>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 
 export default function SearchPage() {
     const router = useRouter();
@@ -294,17 +294,14 @@ export default function SearchPage() {
                     <strong>Cause:</strong> <code>useRouter</code> called outside the router context
                 </p>
                 <p>
-                    <strong>Solution:</strong> Ensure your app is wrapped with <code>&lt;AppRouter&gt;</code>:
+                    <strong>Solution:</strong> Ensure you deleted <code>/src/main.tsx</code> and your <code>/src/App.tsx</code> is like this:
                 </p>
                 <CodeBlock
-                    code={`// src/main.tsx
-import { AppRouter } from "helium/client";
-
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <AppRouter>
-        {/* Your app */}
-    </AppRouter>
-);`}
+                    code={`import { type AppShellProps } from "heliumts/client";
+                    
+export default function App({ Component, pageProps }: AppShellProps) {
+    return <Component {...pageProps} />;
+}`}
                     language="typescript"
                 />
 

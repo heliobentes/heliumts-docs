@@ -6,7 +6,7 @@ export default function OpenAIGuide() {
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900">Using OpenAI API</h1>
 
-            <p>This guide shows how to integrate OpenAI's API with HeliumJS for both streaming and non-streaming completions.</p>
+            <p>This guide shows how to integrate OpenAI's API with HeliumTS for both streaming and non-streaming completions.</p>
 
             <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-900">Setup</h2>
@@ -20,7 +20,7 @@ export default function OpenAIGuide() {
                 <h2 className="text-xl font-semibold text-gray-900">Non-Streaming Example (RPC)</h2>
                 <p>For simple request-response patterns, use RPC:</p>
                 <CodeBlock
-                    code={`import { defineRPC } from "helium/server";
+                    code={`import { defineRPC } from "heliumts/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -53,8 +53,8 @@ export const chatCompletion = defineRPC(async (data: { message: string }, ctx) =
                 />
                 <p className="mt-4">Client-side usage:</p>
                 <CodeBlock
-                    code={`import { useCall } from "helium/client";
-import { chatCompletion } from "helium/server";
+                    code={`import { useCall } from "heliumts/client";
+import { chatCompletion } from "heliumts/server";
 
 export default function ChatPage() {
     const { call, data, loading, error } = useCall(chatCompletion);
@@ -80,7 +80,7 @@ export default function ChatPage() {
                 <h2 className="text-xl font-semibold text-gray-900">Streaming Example (HTTP)</h2>
                 <p>For real-time chat interfaces with token-by-token streaming, use HTTP handlers:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({

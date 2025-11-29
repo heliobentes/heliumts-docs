@@ -1,4 +1,4 @@
-import type { HeliumConfig } from "helium/server";
+import type { HeliumConfig } from "heliumts/server";
 
 const config: HeliumConfig = {
     trustProxyDepth: 1, // Trust 1 proxy level (e.g., Vercel)

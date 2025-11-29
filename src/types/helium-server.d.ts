@@ -3,11 +3,11 @@
 * Auto generated file - DO NOT EDIT!
 * # Helium Server Type Definitions    
 **/
-import type { getTasks as getTasks_0wyikvj } from '../server/tasks';
+import type { getTasks as getTasks_0zvbelq } from '../server/tasks';
 
-declare module 'helium/server' {
-export const getTasks: import('helium/client').MethodStub<
-    Parameters<typeof getTasks_0wyikvj['handler']>[0],
-    Awaited<ReturnType<typeof getTasks_0wyikvj['handler']>>
+declare module 'heliumts/server' {
+export const getTasks: import('heliumts/client').MethodStub<
+    Parameters<typeof getTasks_0zvbelq['handler']>[0],
+    Awaited<ReturnType<typeof getTasks_0zvbelq['handler']>>
 >;
 }

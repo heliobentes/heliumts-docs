@@ -11,7 +11,7 @@ export default function HttpHandlerExamples() {
                 <h2 className="text-2xl font-semibold text-gray-900">Stripe Webhook</h2>
                 <p>Handle Stripe webhook events with signature verification:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -73,7 +73,7 @@ export const stripeWebhook = defineHTTPRequest("POST", "/webhooks/stripe", async
                 <h2 className="text-2xl font-semibold text-gray-900">OpenAI Streaming</h2>
                 <p>Stream OpenAI chat completions to the client:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
@@ -177,7 +177,7 @@ async function streamChat(message: string) {
                 <h2 className="text-2xl font-semibold text-gray-900">Authentication Handler (Better Auth)</h2>
                 <p>Integrate with Better Auth or similar authentication libraries:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { betterAuth } from "better-auth";
 
 export const auth = betterAuth({
@@ -212,7 +212,7 @@ export const authHandler = defineHTTPRequest("ALL", "/api/auth/*", async (req, c
                 <h2 className="text-2xl font-semibold text-gray-900">GitHub Webhook</h2>
                 <p>Handle GitHub webhook events:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import crypto from "crypto";
 
 const GITHUB_WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET!;
@@ -261,7 +261,7 @@ export const githubWebhook = defineHTTPRequest("POST", "/webhooks/github", async
                 <h2 className="text-2xl font-semibold text-gray-900">File Upload</h2>
                 <p>Handle file uploads with form data:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
@@ -321,7 +321,7 @@ export const uploadFile = defineHTTPRequest("POST", "/api/upload", async (req, c
                 <h2 className="text-2xl font-semibold text-gray-900">REST API CRUD</h2>
                 <p>A complete REST API example:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 
 interface Todo {
     id: string;
@@ -415,7 +415,7 @@ export const deleteTodo = defineHTTPRequest("DELETE", "/api/todos/:id", async (r
                 <h2 className="text-2xl font-semibold text-gray-900">Server-Sent Events (SSE)</h2>
                 <p>Real-time updates using SSE:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 
 // Store connected clients
 const clients = new Set<ReadableStreamDefaultController>();
@@ -477,7 +477,7 @@ export const createNotification = defineHTTPRequest("POST", "/api/notifications"
                 <h2 className="text-2xl font-semibold text-gray-900">Rate Limiting</h2>
                 <p>Simple rate limiting example:</p>
                 <CodeBlock
-                    code={`import { defineHTTPRequest } from "helium/server";
+                    code={`import { defineHTTPRequest } from "heliumts/server";
 
 // Simple in-memory rate limiter
 const rateLimits = new Map<string, { count: number; resetTime: number }>();

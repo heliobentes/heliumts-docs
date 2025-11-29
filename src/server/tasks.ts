@@ -1,4 +1,4 @@
-import { defineHTTPRequest, defineMethod } from "helium/server";
+import { defineHTTPRequest, defineMethod } from "heliumts/server";
 
 type Task = {
     name: string;

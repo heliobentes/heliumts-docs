@@ -5,7 +5,7 @@ export default function ProjectStructure() {
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900">Project Structure</h1>
-            <p>A typical HeliumJS project looks like this:</p>
+            <p>A typical HeliumTS project looks like this:</p>
             <CodeBlock
                 code={`src/
   pages/             # Client-side pages (Next.js pages router style)

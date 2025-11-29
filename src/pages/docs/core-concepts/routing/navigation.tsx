@@ -13,7 +13,7 @@ export default function Navigation() {
                     Use the <code>Link</code> component for client-side navigation:
                 </p>
                 <CodeBlock
-                    code={`import { Link } from "helium/client";
+                    code={`import { Link } from "heliumts/client";
 
 export default function Nav() {
     return (
@@ -77,7 +77,7 @@ export default function Nav() {
                     Use the <code>useRouter</code> hook for programmatic navigation:
                 </p>
                 <CodeBlock
-                    code={`import { useRouter } from "helium/client";
+                    code={`import { useRouter } from "heliumts/client";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -136,7 +136,7 @@ router.replace("/login");`}
                     For declarative redirects, use the <code>Redirect</code> component instead of calling <code>router.push()</code> during render:
                 </p>
                 <CodeBlock
-                    code={`import { Redirect } from "helium/client";
+                    code={`import { Redirect } from "heliumts/client";
 
 export default function OldDocsPage() {
     return <Redirect to="/docs/getting-started" />;
@@ -165,7 +165,7 @@ export default function OldDocsPage() {
                 <CodeBlock
                     code={`// Redirect index page to a default subpage
 // src/pages/docs/index.tsx
-import { Redirect } from "helium/client";
+import { Redirect } from "heliumts/client";
 
 export default function DocsIndex() {
     return <Redirect to="/docs/getting-started" />;

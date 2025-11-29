@@ -3,19 +3,19 @@ export default function Introduction() {
     return (
         <div className="space-y-6">
             <h1 className="text-3xl font-bold text-gray-900">Introduction</h1>
-            <p className="text-lg text-gray-700">HeliumJS is a blazing fast 🚀 and opinionated full-stack React + Vite framework designed for simplicity and type safety.</p>
+            <p className="text-lg text-gray-700">HeliumTS is a blazing fast 🚀 and opinionated full-stack React + Vite framework designed for simplicity and type safety.</p>
 
             <div className="bg-teal-50 border border-teal-200 rounded-lg p-6 my-6">
                 <h3 className="text-lg font-semibold text-teal-900 mb-2">Check out the Example App</h3>
-                <p className="text-teal-800 mb-4">See HeliumJS in action with a fully functional example application including authentication, database integration, and more.</p>
-                <a href="https://github.com/heliobentes/heliumjs-example-app" target="_blank" rel="noopener noreferrer" className="button primary">
+                <p className="text-teal-800 mb-4">See HeliumTS in action with a fully functional example application including authentication, database integration, and more.</p>
+                <a href="https://github.com/heliobentes/heliumts/-example-app" target="_blank" rel="noopener noreferrer" className="button primary">
                     View Example on GitHub &rarr;
                 </a>
             </div>
 
-            <h2 className="text-2xl font-semibold text-gray-900 mt-8">Why HeliumJS?</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mt-8">Why HeliumTS?</h2>
             <p>
-                Building full-stack applications often involves gluing together multiple tools and libraries. HeliumJS provides a cohesive experience by integrating the server and
+                Building full-stack applications often involves gluing together multiple tools and libraries. HeliumTS provides a cohesive experience by integrating the server and
                 client seamlessly.
             </p>
 

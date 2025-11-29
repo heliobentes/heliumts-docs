@@ -149,7 +149,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
                 <h3 className="text-xl font-semibold text-gray-900">Settings Layout Example</h3>
                 <CodeBlock
                     code={`// src/pages/(app)/settings/_layout.tsx
-import { Link, useRouter } from "helium/client";
+import { Link, useRouter } from "heliumts/client";
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -189,7 +189,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                     Layouts receive a <code>children</code> prop containing the page content:
                 </p>
                 <CodeBlock
-                    code={`import type { LayoutProps } from "helium/client";
+                    code={`import type { LayoutProps } from "heliumts/client";
 
 export default function Layout({ children }: LayoutProps) {
     return (
