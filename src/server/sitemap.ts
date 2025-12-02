@@ -2,7 +2,7 @@ import { defineHTTPRequest } from "heliumts/server";
 
 import { type MenuItem, menuItems, type MenuSection } from "../config/docs";
 
-const BASE_URL = "https://heliumjs.com";
+const BASE_URL = "https://heliumts.com";
 
 function getUrls(items: (MenuItem | MenuSection)[]): string[] {
     const urls: string[] = [];
