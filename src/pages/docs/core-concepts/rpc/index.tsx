@@ -1,8 +1,8 @@
 "use ssg";
-import CodeBlock from "../../../components/CodeBlock";
-import Heading from "../../../components/Heading";
+import CodeBlock from "../../../../components/CodeBlock";
+import Heading from "../../../../components/Heading";
 
-export default function RPC() {
+export default function RPCOverview() {
     return (
         <div className="space-y-6">
             <Heading level={1}>RPC (Remote Procedure Calls)</Heading>
@@ -63,26 +63,6 @@ export default function TasksPage() {
         </div>
     );
 }`}
-                language="typescript"
-            />
-
-            <Heading level={2} className="mt-8">
-                Real-time web APP
-            </Heading>
-            <div>
-                <p>
-                    By changing the <code>useFetch</code> TTL setting to a low number ({"<"}2 seconds) you can convert your app into a real-time web app.
-                </p>
-                <p>This will make the data refresh automatically at the specified interval, providing a real-time experience if the data is updated remotely.</p>
-            </div>
-            <CodeBlock
-                code={`// Fetch data (auto-runs on mount)
-// Data is typed based on server method return type
-const { data, isLoading } = useFetch(getTasks, 
-    { status: "open" }, 
-    { ttl: 1000 } // Refresh data every 1 second
-); 
-`}
                 language="typescript"
             />
         </div>

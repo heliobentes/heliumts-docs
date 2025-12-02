@@ -19,6 +19,9 @@ export default function DocsLayout({ children }: LayoutProps) {
         if (router.path.startsWith("/docs/core-concepts/http-handlers")) {
             expanded.add("/docs/core-concepts/http-handlers");
         }
+        if (router.path.startsWith("/docs/core-concepts/rpc")) {
+            expanded.add("/docs/core-concepts/rpc");
+        }
         return expanded;
     });
 
@@ -54,6 +57,9 @@ export default function DocsLayout({ children }: LayoutProps) {
         }
         if (router.path.startsWith("/docs/core-concepts/http-handlers")) {
             setExpandedItems((prev) => new Set([...prev, "/docs/core-concepts/http-handlers"]));
+        }
+        if (router.path.startsWith("/docs/core-concepts/rpc")) {
+            setExpandedItems((prev) => new Set([...prev, "/docs/core-concepts/rpc"]));
         }
 
         // Auto-expand section when navigating
@@ -193,7 +199,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <nav className="max-h-[calc(100vh-6rem)] overflow-y-auto space-y-2 pb-10 pr-1">
                         <div className="px-3 mb-4">
                             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Version</div>
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.2.5</span>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.3.0</span>
                         </div>
                         {menuItems.map((section, i) => (
                             <div key={i}>

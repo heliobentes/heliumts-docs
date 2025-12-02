@@ -7,6 +7,8 @@ import {
     IconCode,
     IconCursorText,
     IconDatabase,
+    IconDatabaseEdit,
+    IconDatabaseSearch,
     IconDeviceDesktopCode,
     IconFileCode,
     IconFolder,
@@ -67,7 +69,17 @@ export const menuItems: MenuSection[] = [
     {
         title: "Core Concepts",
         items: [
-            { title: "RPC", icon: IconServer, href: "/docs/core-concepts/rpc" },
+            {
+                title: "RPC",
+                icon: IconServer,
+                href: "/docs/core-concepts/rpc",
+                subItems: [
+                    { title: "Overview", icon: IconServer, href: "/docs/core-concepts/rpc" },
+                    { title: "Data Fetching", icon: IconDatabaseSearch, href: "/docs/core-concepts/rpc/data-fetching" },
+                    { title: "Data Mutation", icon: IconDatabaseEdit, href: "/docs/core-concepts/rpc/data-mutation" },
+                    { title: "Examples", icon: IconCode, href: "/docs/core-concepts/rpc/examples" },
+                ],
+            },
             {
                 title: "Routing",
                 icon: IconRoute,
