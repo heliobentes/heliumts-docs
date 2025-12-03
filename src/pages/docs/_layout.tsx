@@ -205,7 +205,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <nav className="space-y-2 pb-10 pr-1">
                         <div className=" mb-4">
                             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Version</div>
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.4.0</span>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.4.1</span>
                         </div>
                         {menuItems.map((section, i) => (
                             <div key={i}>
