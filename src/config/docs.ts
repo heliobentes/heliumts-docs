@@ -5,6 +5,7 @@ import {
     IconCloud,
     IconCloudDollar,
     IconCode,
+    IconCpu,
     IconCursorText,
     IconDatabase,
     IconDatabaseEdit,
@@ -100,6 +101,15 @@ export const menuItems: MenuSection[] = [
                 subItems: [
                     { title: "Overview", icon: IconWorld, href: "/docs/core-concepts/http-handlers" },
                     { title: "Examples", icon: IconCode, href: "/docs/core-concepts/http-handlers/examples" },
+                ],
+            },
+            {
+                title: "Background Workers",
+                icon: IconCpu,
+                href: "/docs/core-concepts/workers",
+                subItems: [
+                    { title: "Overview", icon: IconCpu, href: "/docs/core-concepts/workers" },
+                    { title: "Examples", icon: IconCode, href: "/docs/core-concepts/workers/examples" },
                 ],
             },
             { title: "Middleware", icon: IconKeyframeAlignCenter, href: "/docs/core-concepts/middleware" },

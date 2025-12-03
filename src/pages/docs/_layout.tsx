@@ -22,6 +22,9 @@ export default function DocsLayout({ children }: LayoutProps) {
         if (router.path.startsWith("/docs/core-concepts/rpc")) {
             expanded.add("/docs/core-concepts/rpc");
         }
+        if (router.path.startsWith("/docs/core-concepts/workers")) {
+            expanded.add("/docs/core-concepts/workers");
+        }
         return expanded;
     });
 
@@ -60,6 +63,9 @@ export default function DocsLayout({ children }: LayoutProps) {
         }
         if (router.path.startsWith("/docs/core-concepts/rpc")) {
             setExpandedItems((prev) => new Set([...prev, "/docs/core-concepts/rpc"]));
+        }
+        if (router.path.startsWith("/docs/core-concepts/workers")) {
+            setExpandedItems((prev) => new Set([...prev, "/docs/core-concepts/workers"]));
         }
 
         // Auto-expand section when navigating
@@ -132,7 +138,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                         href={item.href}
                         target={item.target}
                         className={cn(
-                            "flex-1 flex items-center gap-3 px-3 py-3 lg:py-1.5 rounded-md text-sm font-medium transition-colors",
+                            "flex-1 flex items-center gap-3 py-3 lg:py-1.5 rounded-md text-sm font-medium transition-colors",
                             !hasSubItems && isActive(item.href)
                                 ? "bg-teal-50 text-teal-700"
                                 : isActiveParent(item.href) && hasSubItems
@@ -196,10 +202,10 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <div className="mb-4 px-3 lg:px-0 hidden lg:block">
                         <Search />
                     </div>
-                    <nav className="max-h-[calc(100vh-6rem)] overflow-y-auto space-y-2 pb-10 pr-1">
-                        <div className="px-3 mb-4">
+                    <nav className="space-y-2 pb-10 pr-1">
+                        <div className=" mb-4">
                             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Version</div>
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.3.0</span>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.4.0</span>
                         </div>
                         {menuItems.map((section, i) => (
                             <div key={i}>
@@ -207,7 +213,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                                     <div className="mb-1">
                                         <button
                                             onClick={() => toggleSection(section.title)}
-                                            className="flex items-center justify-between w-full px-3 py-3 lg:py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 rounded-md transition-colors group cursor-pointer"
+                                            className="flex items-center justify-between w-full py-3 lg:py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50 rounded-md transition-colors group cursor-pointer"
                                         >
                                             {section.title}
                                             {expandedSections.has(section.title) ? (
@@ -222,7 +228,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                                     <Link
                                         href={section.href!}
                                         className={cn(
-                                            "flex items-center gap-3 px-3 py-3 lg:py-1.5 rounded-md text-sm font-medium transition-colors",
+                                            "flex items-center gap-3 py-3 lg:py-1.5 rounded-md text-sm font-medium transition-colors",
                                             router.path === section.href ? "bg-teal-50 text-teal-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                                         )}
                                     >
