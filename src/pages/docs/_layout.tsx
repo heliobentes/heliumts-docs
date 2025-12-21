@@ -246,13 +246,13 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">
                         <strong>Note:</strong>
                         <p>
-                            HeliumTS is under pre-beta and active development. Expect bugs and breaking changes. If you find any issues, please report them in{" "}
+                            HeliumTS is under active development. Expect bugs and breaking changes. If you find any issues, please report them in{" "}
                             <a href="https://github.com/heliobentes/heliumts//issues" target="_blank" className="underline hover:text-yellow-900">
                                 our GitHub <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                             </a>
                         </p>
                         <p>
-                            <i>A stable release is planned for early December 2025.</i>
+                            <i>A stable release is planned for early 2026.</i>
                         </p>
                     </div>
 
