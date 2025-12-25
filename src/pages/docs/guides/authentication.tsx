@@ -116,9 +116,9 @@ export async function middleware(ctx: HeliumContext) {
 
                 <p className="mt-4">Now your RPC functions automatically have access to the authenticated user:</p>
                 <CodeBlock
-                    code={`import { defineRPC } from "heliumts/server";
+                    code={`import { defineMethod } from "heliumts/server";
 
-export const getProfile = defineRPC(async (ctx) => {
+export const getProfile = defineMethod(async (ctx) => {
     // ctx.user is available thanks to middleware
     return {
         id: ctx.user.id,
@@ -127,7 +127,7 @@ export const getProfile = defineRPC(async (ctx) => {
     };
 });
 
-export const updateProfile = defineRPC(async (data: { name: string }, ctx) => {
+export const updateProfile = defineMethod(async (data: { name: string }, ctx) => {
     // Update user profile
     await db.users.update(ctx.user.id, { name: data.name });
     

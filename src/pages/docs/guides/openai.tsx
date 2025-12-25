@@ -21,14 +21,14 @@ export default function OpenAIGuide() {
                 <Heading level={2}>Non-Streaming Example (RPC)</Heading>
                 <p>For simple request-response patterns, use RPC:</p>
                 <CodeBlock
-                    code={`import { defineRPC } from "heliumts/server";
+                    code={`import { defineMethod } from "heliumts/server";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const chatCompletion = defineRPC(async (data: { message: string }, ctx) => {
+export const chatCompletion = defineMethod(async (data: { message: string }, ctx) => {
     if (!data.message) {
         throw new Error("Message is required");
     }
