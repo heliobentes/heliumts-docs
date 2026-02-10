@@ -15,13 +15,14 @@ export default function Configuration() {
                 code={`import type { HeliumConfig } from "heliumts/server";
 
 const config: HeliumConfig = {
-    trustProxyDepth: 1,  // Trust 1 proxy level (e.g., Vercel)
+    // Trust 1 proxy level (e.g., Vercel)
+    trustProxyDepth: 1,
+
     rpc: {
         // Transport mode: "websocket" | "http" | "auto"
-        transport: "websocket",  // default
-        
+        transport: "websocket", // default
+
         // Auto-switch to HTTP on mobile/cellular networks
-        // Mobile carriers prioritize HTTP traffic over WebSocket
         autoHttpOnMobile: false, // default
 
         // Compression settings
@@ -29,13 +30,19 @@ const config: HeliumConfig = {
             enabled: true,
             threshold: 1024,
         },
+
         // Security settings
         security: {
             maxConnectionsPerIP: 10,
-            maxMessagesPerWindow: 200,
+            maxMessagesPerWindow: 100,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },
+
+        // Payload limits
+        maxWsPayload: 10_485_760, // 10 MB
+        maxBodySize: 10_485_760, // 10 MB
+        maxBatchSize: 50,
     },
 };
 

@@ -117,6 +117,7 @@ function TaskList() {
     ttl: 30000,
     refetchOnWindowFocus: true,
     showLoaderOnRefocus: false,
+    showLoaderOnInvalidate: false,
     enabled: true,
 });`}
                 language="typescript"
@@ -169,6 +170,21 @@ function TaskList() {
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 Whether to show loading state during focus-triggered refetches. When <code>false</code>, data updates silently in the background without showing a
                                 loader.
+                            </td>
+                        </tr>
+                        <tr className="hover:bg-gray-50">
+                            <td className="px-6 py-4 text-sm text-gray-900">
+                                <code>showLoaderOnInvalidate</code>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-600">
+                                <code>boolean</code>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-600">
+                                <code>false</code>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-600">
+                                Whether to show loading state during cache invalidation refetches. When <code>false</code>, data updates silently in the background without showing
+                                a loader.
                             </td>
                         </tr>
                         <tr className="hover:bg-gray-50">
