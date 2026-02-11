@@ -65,6 +65,27 @@ export default function TasksPage() {
 }`}
                 language="typescript"
             />
+
+            <Heading level={2} className="mt-10">
+                Public errors in production
+            </Heading>
+            <p>
+                In production, server errors are redacted to a generic <code>Server error</code> message by default. If you want to expose a safe message to clients, throw a
+                <code>PublicError</code> or an error-like object with <code>{`{ public: true }`}</code> from your RPC method.
+            </p>
+            <CodeBlock
+                code={`import { defineMethod, PublicError } from "heliumts/server";
+
+export const createTask = defineMethod(async (args) => {
+    if (!args.name?.trim()) {
+        throw new PublicError("Task name is required");
+        // Or: throw { public: true, message: "Task name is required" };
+    }
+
+    return createTaskInDb(args);
+});`}
+                language="typescript"
+            />
         </div>
     );
 }
