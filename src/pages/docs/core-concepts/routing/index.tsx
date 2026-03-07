@@ -38,6 +38,12 @@ export default function RoutingOverview() {
                             - Nested layouts and route groups
                         </li>
                         <li>
+                            <Link href="/docs/core-concepts/routing/route-groups" className="underline hover:text-teal-900">
+                                Route Groups
+                            </Link>{" "}
+                            - Organize sections without changing URLs
+                        </li>
+                        <li>
                             <Link href="/docs/core-concepts/routing/transitions" className="underline hover:text-teal-900">
                                 Page Transitions
                             </Link>{" "}
@@ -180,6 +186,18 @@ export default function DocsPage() {
                 </p>
                 <p>
                     See <Link href="/docs/core-concepts/routing/layouts">Layouts</Link> for detailed documentation on root layouts, group layouts, and nested layouts.
+                </p>
+            </section>
+
+            <section className="space-y-4">
+                <Heading level={2}>SSR-Aware Routing</Heading>
+                <p>
+                    Routing, layouts, and route groups also work with server-rendered pages. If a page opts into <code>"use ssr";</code>, HeliumTS renders the layout tree on the
+                    server before sending HTML to the browser.
+                </p>
+                <p>
+                    See <Link href="/docs/core-concepts/ssr">SSR</Link> for request-time rendering details and{" "}
+                    <Link href="/docs/core-concepts/routing/route-groups">Route Groups</Link> for layout scoping.
                 </p>
             </section>
 

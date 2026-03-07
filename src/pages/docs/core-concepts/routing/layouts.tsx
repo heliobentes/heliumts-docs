@@ -185,6 +185,37 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
             </section>
 
             <section className="space-y-4">
+                <Heading level={2}>Layouts with SSR</Heading>
+                <p>
+                    When a page uses <code>"use ssr";</code>, the layout tree is rendered on the server too. Avoid client-only guards that return <code>null</code> during server
+                    render, or you will send empty HTML.
+                </p>
+                <CodeBlock
+                    code={`import { isSSR, useRouter } from "heliumts/client";
+import { useEffect } from "react";
+
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+    const { isPending, data } = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!data?.session && !isPending) {
+            router.push("/login");
+        }
+    }, [data, isPending, router]);
+
+    if (!isSSR()) {
+        if (isPending) return null;
+        if (!data?.session) return null;
+    }
+
+    return <main>{children}</main>;
+}`}
+                    language="tsx"
+                />
+            </section>
+
+            <section className="space-y-4">
                 <Heading level={2}>Layout Props</Heading>
                 <p>
                     Layouts receive a <code>children</code> prop containing the page content:
@@ -220,6 +251,9 @@ export default function Layout({ children }: LayoutProps) {
                     </li>
                     <li>
                         <strong>Use route groups:</strong> Organize pages by feature or domain with group layouts
+                    </li>
+                    <li>
+                        <strong>Keep SSR in mind:</strong> Layouts used by server-rendered pages must be safe to execute on the server
                     </li>
                     <li>
                         <strong>Avoid heavy computations:</strong> Layouts persist across navigations, so expensive operations will run on every page

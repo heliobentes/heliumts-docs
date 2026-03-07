@@ -5,7 +5,9 @@ export default function Introduction() {
     return (
         <div className="space-y-6">
             <Heading level={1}>Introduction</Heading>
-            <p className="text-lg text-gray-700">HeliumTS is a blazing fast 🚀 and opinionated full-stack React + Vite framework designed for simplicity and type safety.</p>
+            <p className="text-lg text-gray-700">
+                HeliumTS is an opinionated full-stack React + Vite framework focused on type-safe RPC, file-based routing, and flexible rendering modes for modern apps.
+            </p>
 
             <div className="bg-teal-50 border border-teal-200 rounded-lg p-6 my-6">
                 <Heading level={3} className="text-teal-900 mb-2">
@@ -21,8 +23,8 @@ export default function Introduction() {
                 Why HeliumTS?
             </Heading>
             <p>
-                Building full-stack applications often involves gluing together multiple tools and libraries. HeliumTS provides a cohesive experience by integrating the server and
-                client seamlessly.
+                Building a full-stack React app usually means stitching together routing, data fetching, server APIs, background jobs, and deployment concerns. HeliumTS brings
+                those pieces together behind one runtime and one project structure.
             </p>
 
             <ul className="space-y-4 mt-4">
@@ -52,6 +54,13 @@ export default function Introduction() {
                     </div>
                 </li>
                 <li className="flex gap-3">
+                    <span className="text-2xl">🧩</span>
+                    <div>
+                        <strong className="block text-gray-900">Multiple Rendering Modes</strong>
+                        <span className="text-gray-600">Mix SPA pages with SSG and SSR where it makes sense, instead of forcing the whole app into one rendering model.</span>
+                    </div>
+                </li>
+                <li className="flex gap-3">
                     <span className="text-2xl">🛡️</span>
                     <div>
                         <strong className="block text-gray-900">End-to-End Type Safety</strong>
@@ -59,6 +68,19 @@ export default function Introduction() {
                     </div>
                 </li>
             </ul>
+
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-5">
+                <Heading level={3} className="mb-2">
+                    Core building blocks
+                </Heading>
+                <ul className="list-disc list-inside space-y-1 text-gray-700">
+                    <li>RPC methods for type-safe server calls.</li>
+                    <li>HTTP handlers for webhooks, auth flows, and REST endpoints.</li>
+                    <li>Workers for long-running background processing.</li>
+                    <li>Route groups and nested layouts for larger applications.</li>
+                    <li>SSR and SSG when you need first-load HTML.</li>
+                </ul>
+            </div>
         </div>
     );
 }

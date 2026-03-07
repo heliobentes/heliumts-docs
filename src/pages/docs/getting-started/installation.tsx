@@ -37,7 +37,10 @@ export default function Installation() {
 
             {mode === "default" ? (
                 <>
-                    <p>The easiest way to get started with HeliumTS is by using the create-heliumts-app tool. This CLI tool will set up everything automatically for you.</p>
+                    <p>
+                        The fastest way to start is with the official scaffolding tool. It creates a working HeliumTS project with the runtime, routing, and build setup already
+                        wired up.
+                    </p>
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         Usage
@@ -102,6 +105,7 @@ npm create heliumts-app@latest my-app -- --no-tailwind`}
                         <li>
                             Automatically runs <code>npm install</code>
                         </li>
+                        <li>Leaves you with a project ready for RPC methods, file-based routing, and optional SSR or SSG pages.</li>
                     </ul>
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
@@ -111,7 +115,7 @@ npm create heliumts-app@latest my-app -- --no-tailwind`}
                 </>
             ) : (
                 <>
-                    <p>If you prefer to set up the project manually or want to understand how HeliumTS integrates with Vite, follow these steps.</p>
+                    <p>If you want to understand the moving parts or integrate HeliumTS into an existing Vite app, use the manual setup flow.</p>
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         1. Install React + Vite
@@ -167,8 +171,23 @@ export default function App({ Component, pageProps }: AppShellProps) {
                         6. Create the server and pages folders
                     </Heading>
                     <p>
-                        Create <code>src/server</code> and <code>src/pages</code> folders to hold your server-side logic and client-side pages, respectively.
+                        Create <code>src/server</code> and <code>src/pages</code> folders to hold your server-side logic and your file-based routes.
                     </p>
+
+                    <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
+                        7. Add your first page
+                    </Heading>
+                    <CodeBlock
+                        code={`export default function HomePage() {
+    return (
+        <div>
+            <h1>Welcome to HeliumTS</h1>
+            <p>Start building your app.</p>
+        </div>
+    );
+}`}
+                        language="tsx"
+                    />
 
                     <div className="prose prose-teal max-w-none">
                         <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">

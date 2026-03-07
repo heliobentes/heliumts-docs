@@ -22,6 +22,7 @@ import {
     IconSparkles,
     IconTerminal,
     IconWorld,
+    IconHierarchy,
 } from "@tabler/icons-react";
 import React from "react";
 
@@ -90,6 +91,7 @@ export const menuItems: MenuSection[] = [
                     { title: "Navigation", icon: IconLink, href: "/docs/core-concepts/routing/navigation" },
                     { title: "useRouter Hook", icon: IconCursorText, href: "/docs/core-concepts/routing/use-router" },
                     { title: "Layouts", icon: IconAppWindow, href: "/docs/core-concepts/routing/layouts" },
+                    { title: "Route Groups", icon: IconHierarchy, href: "/docs/core-concepts/routing/route-groups" },
                     { title: "Page Transitions", icon: IconArrowsShuffle, href: "/docs/core-concepts/routing/transitions" },
                     { title: "Examples", icon: IconCode, href: "/docs/core-concepts/routing/examples" },
                 ],
@@ -115,6 +117,7 @@ export const menuItems: MenuSection[] = [
             { title: "Middleware", icon: IconKeyframeAlignCenter, href: "/docs/core-concepts/middleware" },
             { title: "Configuration", icon: IconSettings, href: "/docs/core-concepts/configuration" },
             { title: "SSG", icon: IconFileCode, href: "/docs/core-concepts/ssg" },
+            { title: "SSR", icon: IconServer, href: "/docs/core-concepts/ssr" },
         ],
     },
     {
