@@ -256,7 +256,7 @@ function trackPageView(path: string) {
                 <CodeBlock
                     code={`// src/pages/_layout.tsx
 import Analytics from "../components/Analytics";
-import { PageTransition } from "heliumts/client";
+import { PageTransition } from "heliumts/client/transitions";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

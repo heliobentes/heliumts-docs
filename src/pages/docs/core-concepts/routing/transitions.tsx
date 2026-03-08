@@ -37,10 +37,11 @@ export default function PageTransitions() {
             <section className="space-y-4">
                 <Heading level={2}>PageTransition Component</Heading>
                 <p>
-                    The <code>PageTransition</code> component handles all navigation transition complexity with a simple API:
+                    Transition APIs are exported from <code>heliumts/client/transitions</code>. The <code>PageTransition</code> component handles navigation transition complexity
+                    with a simple API:
                 </p>
                 <CodeBlock
-                    code={`import { PageTransition } from "heliumts/client";
+                    code={`import { PageTransition } from "heliumts/client/transitions";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -103,7 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     For more control, the <code>useDeferredNavigation</code> hook integrates <code>useDeferredValue</code> and <code>useTransition</code> with the router:
                 </p>
                 <CodeBlock
-                    code={`import { useDeferredNavigation } from "heliumts/client";
+                    code={`import { useDeferredNavigation } from "heliumts/client/transitions";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { isStale, isPending, isTransitioning } = useDeferredNavigation();
@@ -164,7 +165,7 @@ export default function NavigationLoader() {
                 <CodeBlock
                     code={`// src/pages/_layout.tsx
 import NavigationLoader from "../components/NavigationLoader";
-import { PageTransition } from "heliumts/client";
+import { PageTransition } from "heliumts/client/transitions";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

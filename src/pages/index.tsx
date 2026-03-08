@@ -41,7 +41,9 @@ export default function Home() {
                 <div className="flex flex-col justify-center items-center lg:items-start py-10 lg:col-span-3">
                     <span className="text-teal-600 text-sm font-medium text-center lg:text-left">🚀 Up to 2x faster than HTTP</span>
                     <h1 className="text-4xl font-semibold w-full my-2 text-center lg:text-left">Blazing fast and opinionated full-stack React + Vite framework</h1>
-                    <p className="text-lg text-gray-500 text-center lg:text-left">Designed for simplicity and type safety, it provides seamless RPC + pages routing.</p>
+                    <p className="text-lg text-gray-500 text-center lg:text-left">
+                        Designed for simplicity and type safety, it provides seamless RPC, file-based routing, SSR, and SSG.
+                    </p>
                     <Link href="/docs" className="button primary mt-6">
                         Get Started
                     </Link>
@@ -148,7 +150,7 @@ export default function Home() {
                             <IconServer size={32} />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Full-Stack Capabilities</h3>
-                        <p className="text-gray-500">Built-in support for SSG, custom HTTP handlers, middleware, and more.</p>
+                        <p className="text-gray-500">Built-in support for SSR, SSG, custom HTTP handlers, middleware, and more.</p>
                     </div>
                 </div>
             </div>
