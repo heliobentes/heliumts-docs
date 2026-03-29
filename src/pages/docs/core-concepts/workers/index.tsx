@@ -98,17 +98,46 @@ export const queueConsumer = defineWorker(
      * Default: true
      */
     autoStart?: boolean;
+}
+
+interface WorkerLifecycle {
+    signal: AbortSignal;
+    onCleanup(cleanup: () => Promise<void> | void): void;
 }`}
                     language="typescript"
                 />
+
+                <p>
+                    The worker handler receives <code>ctx</code> as the first argument and a lifecycle object as the second:
+                </p>
+                <CodeBlock
+                    code={`type WorkerHandler = (
+    ctx: HeliumContext,
+    lifecycle: WorkerLifecycle
+) => Promise<(() => Promise<void> | void) | void> | (() => Promise<void> | void) | void;`}
+                    language="typescript"
+                />
+                <ul className="list-disc list-inside space-y-1 ml-4">
+                    <li>
+                        <code>signal</code> is aborted when Helium stops the worker during shutdown or hot reload.
+                    </li>
+                    <li>
+                        <code>onCleanup(...)</code> registers teardown logic for change streams, intervals, event listeners, queue consumers, and similar resources.
+                    </li>
+                    <li>Returning a cleanup function is shorthand for workers that start background resources and should stay alive until Helium aborts them.</li>
+                </ul>
 
                 <Heading level={3}>Example with Options</Heading>
                 <CodeBlock
                     code={`import { defineWorker } from "heliumts/server";
 
 export const dataSync = defineWorker(
-    async (ctx) => {
+    async (ctx, { signal }) => {
         while (true) {
+            if (signal.aborted) {
+                break;
+            }
+
             await syncDataFromExternalAPI();
             await new Promise((resolve) => setTimeout(resolve, 30000)); // Every 30 seconds
         }

@@ -15,7 +15,7 @@ import { Queue, Worker } from "bullmq";
 import { redis } from "../lib/redis";
 
 export const emailQueueConsumer = defineWorker(
-    async (ctx) => {
+    async (ctx, { onCleanup }) => {
         const worker = new Worker(
             "email-queue",
             async (job) => {
@@ -32,6 +32,8 @@ export const emailQueueConsumer = defineWorker(
         worker.on("failed", (job, err) => {
             console.error(\`Email job \${job?.id} failed:\`, err);
         });
+
+        onCleanup(() => worker.close());
 
         // Keep the worker running
         await new Promise(() => {});
@@ -76,7 +78,7 @@ export const dailyCleanup = defineWorker(
                     code={`import { defineWorker } from "heliumts/server";
 
 export const priceSync = defineWorker(
-    async (ctx) => {
+    (ctx) => {
         const ws = new WebSocket("wss://api.exchange.com/prices");
 
         ws.on("message", async (data) => {
@@ -89,8 +91,7 @@ export const priceSync = defineWorker(
             throw new Error("WebSocket connection closed");
         });
 
-        // Keep the connection alive
-        await new Promise(() => {});
+        return () => ws.close();
     },
     {
         name: "priceSync",
@@ -100,6 +101,32 @@ export const priceSync = defineWorker(
 );`}
                     language="typescript"
                 />
+            </section>
+
+            <section className="space-y-4">
+                <Heading level={2}>MongoDB Change Stream Cleanup</Heading>
+                <CodeBlock
+                    code={`import { defineWorker } from "heliumts/server";
+
+export const orderWatcher = defineWorker(
+    (_ctx, { onCleanup }) => {
+        const stream = OrderModel.watch();
+
+        stream.on("change", async (change) => {
+            await enqueueOrderSync(change.documentKey?._id?.toString());
+        });
+
+        onCleanup(async () => {
+            await stream.close();
+        });
+    },
+    { name: "orderWatcher" }
+);`}
+                    language="typescript"
+                />
+                <p>
+                    In <code>helium dev</code>, Helium runs cleanup before starting the replacement worker after a hot reload, so only one watcher instance remains active.
+                </p>
             </section>
 
             <section className="space-y-4">
