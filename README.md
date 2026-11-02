@@ -6,7 +6,7 @@ This repository contains the source code for the official documentation of [Heli
 
 The documentation site is built using:
 
-- **HeliumTS 0.10.1**: HTTP-only typed RPC and streaming.
+- **HeliumTS 0.10.2**: HTTP-only typed RPC and streaming.
 - **React**: UI library.
 - **Vite**: Build tool.
 - **TailwindCSS**: Styling.

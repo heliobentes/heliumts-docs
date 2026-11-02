@@ -14,7 +14,7 @@ export default function Installation() {
                 Installation
             </Heading>
 
-            <p>Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. The examples below target HeliumTS 0.10.1.</p>
+            <p>Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. The examples below target HeliumTS 0.10.2.</p>
 
             <div className="flex gap-3 my-4 text-sm">
                 <button
@@ -132,7 +132,7 @@ npm create heliumts-app@latest my-app -- --no-tailwind`}
                         2. Install HeliumTS
                     </Heading>
                     <CodeBlock
-                        code={`npm install heliumts@^0.10.1
+                        code={`npm install heliumts@^0.10.2
 npm install --save-dev vite@^7.3.7`}
                         language="bash"
                     />

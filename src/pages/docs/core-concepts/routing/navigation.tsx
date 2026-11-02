@@ -53,7 +53,7 @@ export default function Nav() {
                     <li>Modifier keys (Ctrl, Cmd, Shift, Alt) preserve normal link behavior (open in new tab, etc.)</li>
                     <li>Right-clicks and middle-clicks work normally</li>
                     <li>
-                        <strong>Route preloading:</strong> Hovering or focusing a link calls the route preload hook. HeliumTS 0.10.1 eagerly imports page modules, so this does not
+                        <strong>Route preloading:</strong> Hovering or focusing a link calls the route preload hook. HeliumTS 0.10.2 eagerly imports page modules, so this does not
                         create separate page chunks.
                     </li>
                 </ul>

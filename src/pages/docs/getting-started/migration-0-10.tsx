@@ -22,8 +22,8 @@ export default function Migration() {
             </p>
             <CodeBlock
                 language="bash"
-                code={`npm install heliumts@^0.10.1
-npm create heliumts-app@0.10.1 my-app`}
+                code={`npm install heliumts@^0.10.2
+npm create heliumts-app@0.10.2 my-app`}
             />
             <Heading level={2}>Remove old connection settings and helpers</Heading>
             <div className="overflow-x-auto">
