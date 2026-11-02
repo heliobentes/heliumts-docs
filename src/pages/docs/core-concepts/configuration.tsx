@@ -101,6 +101,11 @@ export default config;`}
                 </li>
             </ul>
 
+            <p>
+                HTTP calls queued together are split into concurrent batches of at most <code>rpc.maxBatchSize</code> calls (default 20). Message rate limits apply to WebSocket
+                connections and to HTTP RPC requests per client IP.
+            </p>
+
             <Heading level={3} className="mt-6">
                 Compression
             </Heading>
@@ -263,19 +268,13 @@ export default config;`}
             <Heading level={2} className="mt-8">
                 Production Deployment Notes
             </Heading>
-            <ol className="list-decimal list-inside space-y-2 ml-4">
-                <li>
-                    If <code>helium.config.ts</code> exists, <code>helium build</code> transpiles it to <code>dist/helium.config.js</code>.
-                </li>
-                <li>
-                    If <code>helium.config.js</code> exists, it is copied to <code>dist/helium.config.js</code>.
-                </li>
-                <li>
-                    If <code>helium.config.mjs</code> exists, it is copied to <code>dist/helium.config.mjs</code>.
-                </li>
-            </ol>
             <p>
-                At runtime, <code>helium start</code> checks the <code>dist</code> directory first, then the project root.
+                <code>helium build</code> selects <code>helium.config.js</code>, <code>helium.config.mjs</code>, then <code>helium.config.ts</code> and bundles the selected file to{" "}
+                <code>dist/helium.config.js</code>. Local imports are bundled with it; package dependencies remain external.
+            </p>
+            <p>
+                Both <code>helium start</code> and <code>node dist/server.js</code> check the build directory first, then the project root. Set <code>HELIUM_CONFIG_DIR</code>
+                to override the config directory. A config build or evaluation error fails the build or startup instead of silently replacing your settings with defaults.
             </p>
 
             <Heading level={2} className="mt-8">
@@ -286,9 +285,14 @@ export default config;`}
                     Checks the <code>HELIUM_CONFIG_DIR</code> environment variable.
                 </li>
                 <li>
-                    Resolves config files in this order: <code>helium.config.js</code>, <code>helium.config.mjs</code>, then <code>helium.config.ts</code> (dev with Vite).
+                    Resolves config files in this order: <code>helium.config.js</code>, <code>helium.config.mjs</code>, then <code>helium.config.ts</code>. TypeScript configs and
+                    their local imports are bundled before loading, including on Node.js 20.
                 </li>
             </ol>
+            <p>
+                Export a configuration object as the default export. Default settings apply only when no config file exists. Config caches are scoped to the project and config
+                directory.
+            </p>
         </div>
     );
 }

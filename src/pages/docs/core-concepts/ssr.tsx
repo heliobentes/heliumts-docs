@@ -65,7 +65,7 @@ export default function DashboardPage() {
                         </tr>
                         <tr>
                             <td className="px-4 py-2 font-medium text-gray-900">Auth-protected pages</td>
-                            <td className="px-4 py-2">Yes (skip guard on server)</td>
+                            <td className="px-4 py-2">Yes (authorize on the server)</td>
                             <td className="px-4 py-2">No</td>
                             <td className="px-4 py-2">Yes</td>
                         </tr>
@@ -92,47 +92,39 @@ export default function DashboardPage() {
                 To fetch data per request, export <code>getServerSideProps</code> from the same page file or from a sidecar <code>page.server.ts</code> file.
             </p>
 
-            <Heading level={3} className="mt-6">
-                Inline Export (Not Recommended)
-            </Heading>
-            <CodeBlock
-                code={`"use ssr";
-
-import type { GetServerSideProps } from "heliumts/server";
-
-export const getServerSideProps: GetServerSideProps = async (req) => {
-    const user = await db.users.findById(req.params.id);
-    return { user };
-};
-
-export default function ProfilePage({ user }: { user: { name: string } }) {
-    return <h1>Hello, {user.name}</h1>;
-}`}
-                language="tsx"
-            />
+            <p>
+                Page modules also run in the browser. Put database access, credentials, and authorization in a <code>.server.ts</code> sidecar or in <code>src/server</code>.
+                Browser code should import RPC method stubs from <code>heliumts/server</code>, rather than directly importing files under <code>src/server</code>.
+            </p>
 
             <Heading level={3} className="mt-6">
                 Sidecar File (Recommended)
             </Heading>
-            <p>Use a sidecar file to avoid mixing component and non-component exports in one module and keep Fast Refresh clean.</p>
+            <p>Use a sidecar to keep sensitive server code out of the client bundle and preserve Fast Refresh.</p>
             <CodeBlock
                 code={`src/pages/
-├── profile.tsx
-└── profile.server.ts`}
+└── profile/
+    ├── [id].tsx
+    └── [id].server.ts`}
                 language="plaintext"
             />
             <CodeBlock
-                code={`// src/pages/profile.server.ts
+                code={`// src/pages/profile/[id].server.ts
 import type { GetServerSideProps } from "heliumts/server";
 
 export const getServerSideProps: GetServerSideProps = async (req, ctx) => {
-    const user = await db.users.findById(req.params.id as string);
-    return { user };
+    // Implement authentication with your application's session helper.
+    const currentUser = await findAuthenticatedUser(ctx.req.headers);
+    if (!currentUser || currentUser.id !== req.params.id) {
+        return { redirect: { destination: "/login", statusCode: 307 } };
+    }
+    const user = await db.users.findById(currentUser.id);
+    return { user: { name: user.name } };
 };`}
                 language="typescript"
             />
             <CodeBlock
-                code={`// src/pages/profile.tsx
+                code={`// src/pages/profile/[id].tsx
 "use ssr";
 
 export default function ProfilePage({ user }: { user: { name: string } }) {
@@ -202,7 +194,8 @@ export const getServerSideProps: GetServerSideProps = async (req, ctx) => {
                 Layouts work the same way as with regular pages. If a layout returns <code>null</code> during SSR due to auth guards, the server output will be empty.
             </p>
             <p>
-                Use <code>isSSR()</code> to skip client-only guards on the server while still rendering the full provider tree.
+                Authorize protected requests in <code>getServerSideProps</code> before returning data. After that check, <code>isSSR()</code> can skip client-only loading guards
+                while preserving the provider tree. A client-side redirect or layout guard is not a server authorization check.
             </p>
             <CodeBlock
                 code={`import { isSSR, useRouter } from "heliumts/client";
@@ -269,7 +262,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 Client-Side Navigation
             </Heading>
             <p>
-                After the first load, Helium fetches props via <code>GET /__helium__/page-props?path=&lt;url&gt;</code> and re-renders client-side without full-page reloads.
+                After the first load, Helium fetches props via <code>GET /__helium__/page-props?path=&lt;url&gt;</code> and re-renders client-side without full-page reloads. The
+                target URL includes its query string, so <code>req.query</code> is consistent between direct requests and client navigation. Same-path query changes also refetch
+                props.
             </p>
 
             <Heading level={2} className="mt-8">
@@ -287,19 +282,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     <tbody className="divide-y divide-gray-100 bg-white">
                         <tr>
                             <td className="px-4 py-2">page.server.ts</td>
-                            <td className="px-4 py-2">src/pages/profile.server.ts</td>
+                            <td className="px-4 py-2">src/pages/profile/[id].server.ts</td>
                         </tr>
                         <tr>
                             <td className="px-4 py-2">page.server.tsx</td>
-                            <td className="px-4 py-2">src/pages/profile.server.tsx</td>
+                            <td className="px-4 py-2">src/pages/profile/[id].server.tsx</td>
                         </tr>
                         <tr>
                             <td className="px-4 py-2">page.server.js</td>
-                            <td className="px-4 py-2">src/pages/profile.server.js</td>
+                            <td className="px-4 py-2">src/pages/profile/[id].server.js</td>
                         </tr>
                         <tr>
                             <td className="px-4 py-2">page.server.mts</td>
-                            <td className="px-4 py-2">src/pages/profile.server.mts</td>
+                            <td className="px-4 py-2">src/pages/profile/[id].server.mts</td>
                         </tr>
                     </tbody>
                 </table>
@@ -353,13 +348,13 @@ export default function MapPage() {
             </Heading>
             <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>
-                    <a href="./ssg">Static Site Generation (SSG)</a>
+                    <a href="/docs/core-concepts/ssg">Static Site Generation (SSG)</a>
                 </li>
                 <li>
-                    <a href="./routing">Routing</a>
+                    <a href="/docs/core-concepts/routing">Routing</a>
                 </li>
                 <li>
-                    <a href="../advanced/context-api">Context API</a>
+                    <a href="/docs/advanced/context-api">Context API</a>
                 </li>
             </ul>
         </div>

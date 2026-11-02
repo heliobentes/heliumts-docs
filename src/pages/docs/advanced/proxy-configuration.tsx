@@ -31,24 +31,20 @@ export default config;`}
             <Heading level={2} className="mt-8">
                 How It Works
             </Heading>
-            <p>Helium checks multiple headers to extract the client IP, in order of reliability:</p>
-            <ol className="list-decimal list-inside space-y-2 ml-4">
-                <li>
-                    <code>CF-Connecting-IP</code> - Cloudflare's guaranteed client IP
-                </li>
-                <li>
-                    <code>True-Client-IP</code> - Cloudflare Enterprise and Akamai
-                </li>
-                <li>
-                    <code>X-Real-IP</code> - Set by Nginx and other proxies
-                </li>
-                <li>
-                    <code>X-Forwarded-For</code> - Standard header containing IP chain
-                </li>
-                <li>
-                    <code>req.socket.remoteAddress</code> - Direct connection IP (fallback)
-                </li>
-            </ol>
+            <p>
+                With <code>trustProxyDepth: 0</code>, Helium ignores forwarding headers and uses the direct socket address. With proxy trust enabled, it selects the client address
+                from <code>X-Forwarded-For</code> by counting trusted hops from the right, including the direct peer.
+            </p>
+            <CodeBlock
+                code={`X-Forwarded-For: untrusted-prefix, client, proxy
+trustProxyDepth: 1  -> proxy
+trustProxyDepth: 2  -> client`}
+                language="text"
+            />
+            <p>
+                When <code>X-Forwarded-For</code> is absent, Helium can use <code>CF-Connecting-IP</code>, <code>True-Client-IP</code>, then <code>X-Real-IP</code>. Forwarded
+                values must be valid IP addresses; an invalid or too-short chain falls back to the socket address. Your trusted proxy must overwrite provider-specific headers.
+            </p>
 
             <Heading level={2} className="mt-8">
                 Common Deployment Scenarios
@@ -60,7 +56,7 @@ export default config;`}
             <p>
                 <code>trustProxyDepth: 1</code>
             </p>
-            <p>These platforms add one proxy layer.</p>
+            <p>Use 1 only when your deployment has exactly one trusted proxy hop; check the actual proxy chain for your platform.</p>
 
             <Heading level={3} className="mt-6">
                 Cloudflare → Your Server
@@ -69,7 +65,7 @@ export default config;`}
                 <code>trustProxyDepth: 1</code>
             </p>
             <p>
-                Helium automatically uses the <code>CF-Connecting-IP</code> header.
+                Helium uses the rightmost forwarded address when <code>X-Forwarded-For</code> is present, otherwise a valid provider-specific header.
             </p>
 
             <Heading level={3} className="mt-6">

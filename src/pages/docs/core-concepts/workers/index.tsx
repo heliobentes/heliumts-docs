@@ -41,12 +41,13 @@ export default function WorkersOverview() {
                     code={`import { defineWorker } from "heliumts/server";
 
 export const queueConsumer = defineWorker(
-    async (ctx) => {
+    async (_ctx, { signal }) => {
         console.log("Queue consumer started");
 
-        while (true) {
+        while (!signal.aborted) {
             // Poll for jobs
             const job = await queue.pop();
+            if (signal.aborted) break;
 
             if (job) {
                 await processJob(job);
@@ -87,7 +88,7 @@ export const queueConsumer = defineWorker(
     restartDelayMs?: number;
 
     /**
-     * Maximum number of restart attempts before giving up.
+     * Maximum number of retries after the initial run before giving up.
      * Set to 0 for unlimited restarts.
      * Default: 0 (unlimited)
      */
@@ -127,6 +128,18 @@ interface WorkerLifecycle {
                     <li>Returning a cleanup function is shorthand for workers that start background resources and should stay alive until Helium aborts them.</li>
                 </ul>
 
+                <p>
+                    <code>maxRestarts: 1</code> permits the initial run and one retry. Stopping cancels pending restart delays. Cleanup registered or returned after asynchronous
+                    setup finishes still runs, even when the worker was stopped while setup was pending.
+                </p>
+                <CodeBlock
+                    code={`export const heartbeat = defineWorker(() => {
+    const timer = setInterval(() => reportHealth(), 30_000);
+    return () => clearInterval(timer);
+}, { name: "heartbeat" });`}
+                    language="typescript"
+                />
+
                 <Heading level={3}>Example with Options</Heading>
                 <CodeBlock
                     code={`import { defineWorker } from "heliumts/server";
@@ -156,20 +169,20 @@ export const dataSync = defineWorker(
             <section className="space-y-4">
                 <Heading level={2}>Context Access</Heading>
                 <p>
-                    Workers receive a <code>HeliumContext</code> object, similar to RPC methods:
+                    Workers receive a <code>HeliumContext</code> object. HTTP and RPC middleware does not run for workers; import application services directly instead of assuming
+                    middleware populated the context:
                 </p>
                 <CodeBlock
                     code={`import { defineWorker } from "heliumts/server";
 
+import { db } from "../database"; // Your application service
+
 export const contextExample = defineWorker(
-    async (ctx) => {
+    async (ctx, { signal }) => {
         // Access context properties
         console.log("Worker context:", ctx);
 
-        // You can add custom properties via middleware
-        const db = ctx.db; // If set by middleware
-
-        while (true) {
+        while (!signal.aborted) {
             await performTask(db);
             await new Promise((resolve) => setTimeout(resolve, 5000));
         }

@@ -7,8 +7,8 @@ export default function RPCDataFetching() {
         <div className="space-y-6">
             <Heading level={1}>Data Fetching</Heading>
             <p>
-                HeliumTS provides the <code>useFetch</code> hook for data fetching. It communicates with the server over WebSocket RPC, providing real-time, type-safe data
-                operations.
+                HeliumTS provides the <code>useFetch</code> hook for data fetching. It communicates with the server over WebSocket or HTTP RPC, selected by your configuration, and
+                shares cached results between matching calls.
             </p>
 
             <Heading level={2} className="mt-8">
@@ -89,7 +89,7 @@ function TaskList() {
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 <code>RpcStats | null</code>
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-600">RPC statistics (timing, etc.)</td>
+                            <td className="px-6 py-4 text-sm text-gray-600">Rate-limit statistics: remaining requests and seconds until the limit resets</td>
                         </tr>
                         <tr className="hover:bg-gray-50">
                             <td className="px-6 py-4 text-sm text-gray-900">
@@ -105,6 +105,11 @@ function TaskList() {
                     </tbody>
                 </table>
             </div>
+
+            <p>
+                Concurrent requests with the same method and arguments share one in-flight fetch. Changing arguments prevents older responses from replacing the current result.
+                Cache invalidation refreshes all mounted readers for that method; failed fetches can be retried with <code>refetch()</code>.
+            </p>
 
             <Heading level={3} className="mt-6">
                 Options
@@ -143,7 +148,9 @@ function TaskList() {
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 <code>300000</code> (5 min)
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-600">Time-to-live for cached data in milliseconds. After TTL expires, data is automatically refetched.</td>
+                            <td className="px-6 py-4 text-sm text-gray-600">
+                                Time-to-live for cached data in milliseconds. Expired data is refreshed on the next fetch trigger; TTL does not start polling.
+                            </td>
                         </tr>
                         <tr className="hover:bg-gray-50">
                             <td className="px-6 py-4 text-sm text-gray-900">

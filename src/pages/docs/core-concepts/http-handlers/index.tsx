@@ -257,6 +257,14 @@ export const authHandler = defineHTTPRequest("ALL", "/auth/*", async (req, ctx) 
             </section>
 
             <section className="space-y-4">
+                <Heading level={2}>Request Limits and Response Semantics</Heading>
+                <p>
+                    Configure <code>rpc.maxBodySize</code> to limit request bodies. Oversized requests return 413; malformed JSON returns 400. HEAD responses send headers without a
+                    body. Response streams are sent incrementally, and multiple <code>Set-Cookie</code> headers remain separate.
+                </p>
+            </section>
+
+            <section className="space-y-4">
                 <Heading level={2}>Best Practices</Heading>
                 <ul className="list-disc list-inside space-y-1 ml-4">
                     <li>

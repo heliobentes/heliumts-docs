@@ -131,7 +131,7 @@ export default function ProductionDeployment() {
             </p>
             <ol className="list-decimal list-inside space-y-2 ml-4">
                 <li>
-                    <strong>Pre-render all pages</strong> using SSG (see <a href="./ssg.md">SSG documentation</a>)
+                    <strong>Pre-render all pages</strong> using SSG (see <a href="/docs/core-concepts/ssg">SSG documentation</a>)
                 </li>
                 <li>
                     <strong>Avoid RPC calls</strong> - use external APIs or pre-fetched data instead
@@ -164,26 +164,21 @@ export default function ProductionDeployment() {
             </p>
 
             <Heading level={3} className="mt-6">
-                Automatic Config Transpilation
+                Automatic Config Bundling
             </Heading>
             <p>
                 During <code>helium build</code>, the framework:
             </p>
-            <ol className="list-decimal list-inside space-y-2 ml-4">
-                <li>
-                    <strong>If helium.config.ts exists</strong>: Automatically transpiles it to <code>dist/helium.config.js</code>
-                </li>
-                <li>
-                    <strong>If helium.config.js exists</strong>: Copies it to <code>dist/helium.config.js</code>
-                </li>
-                <li>
-                    <strong>If helium.config.mjs exists</strong>: Copies it to <code>dist/helium.config.mjs</code>
-                </li>
-            </ol>
-            <p className="mt-2">
-                When you run <code>helium start</code>, the production server looks for the config file in the <code>dist</code> directory first, then falls back to the project
-                root.
+            <p>
+                Helium selects <code>helium.config.js</code>, <code>helium.config.mjs</code>, then <code>helium.config.ts</code>, and bundles the selected config and local helpers
+                to <code>dist/helium.config.js</code>. Package imports remain external. A config error fails the build or startup, so security settings are never silently
+                discarded.
             </p>
+            <p className="mt-2">
+                Both <code>helium start</code> and <code>node dist/server.js</code> load config from the build directory first, then the project root. Override the directory with{" "}
+                <code>HELIUM_CONFIG_DIR</code>. Run production commands from the project root so static assets and <code>.env</code> files are found.
+            </p>
+            <p>Use Node.js 20.19+ or 22.12+ with Vite 7. The example Docker image below uses Node.js 22.</p>
 
             <Heading level={3} className="mt-6">
                 Deployment Structure
@@ -195,7 +190,7 @@ export default function ProductionDeployment() {
                 code={`your-app/
 ├── dist/
 │   ├── server.js              # Bundled server code
-│   ├── helium.config.js       # Transpiled config (if you had .ts)
+│   ├── helium.config.js       # Bundled config and local helpers
 │   ├── index.html             # Client entry
 │   └── assets/                # Client bundles
 ├── package.json
@@ -237,13 +232,13 @@ export default function ProductionDeployment() {
                 Docker
             </Heading>
             <CodeBlock
-                code={`FROM node:18-alpine
+                code={`FROM node:22-alpine
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Copy built files
 COPY dist ./dist
@@ -472,18 +467,16 @@ HELIUM_PUBLIC_FEATURE_FLAG=true`}
             <p className="mt-2 font-semibold">Solutions:</p>
             <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>If using platform environment variables: Ignore this warning, it's expected</li>
-                <li>
-                    If using .env files: Ensure they're in the same directory as <code>server.js</code>
-                </li>
+                <li>If using .env files: Keep them at the project root, where you run the production command</li>
                 <li>
                     Check <code>process.cwd()</code> matches your .env file location
                 </li>
             </ul>
 
             <Heading level={4} className="mt-4">
-                Error: "Unknown file extension .ts"
+                Configuration load or build errors
             </Heading>
-            <p>This means the config file wasn't transpiled during build. Ensure:</p>
+            <p>Helium supports TypeScript configs without a Node TypeScript loader. If a config fails to load, check the reported file and error, then verify:</p>
             <ol className="list-decimal list-inside space-y-2 ml-4">
                 <li>
                     Your config file is at the project root as <code>helium.config.ts</code>

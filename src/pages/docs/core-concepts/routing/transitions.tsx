@@ -16,10 +16,10 @@ export default function PageTransitions() {
                     <p className="font-semibold text-teal-800 mb-2">How It Works:</p>
                     <ol className="list-decimal list-inside space-y-1 text-teal-700">
                         <li>
-                            <strong>Lazy Loading:</strong> Pages are automatically code-split and lazy-loaded
+                            <strong>Page Loading:</strong> Pages are eagerly imported in 0.9.6; transitions coordinate rendering rather than automatically splitting page bundles
                         </li>
                         <li>
-                            <strong>Prefetching:</strong> Link components prefetch pages on hover/focus
+                            <strong>Preload Hooks:</strong> Link components call route preload hooks on hover and focus
                         </li>
                         <li>
                             <strong>Deferred Rendering:</strong> React renders new pages in the background
@@ -72,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         <code>loadingStyle</code> (CSSProperties, optional): Inline styles applied during transitions
                     </li>
                     <li>
-                        <code>fallback</code> (ReactNode, optional): Suspense fallback for lazy-loaded pages
+                        <code>fallback</code> (ReactNode, optional): Suspense fallback for suspended child components
                     </li>
                 </ul>
 

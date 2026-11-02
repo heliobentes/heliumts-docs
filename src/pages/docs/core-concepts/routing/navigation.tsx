@@ -53,12 +53,16 @@ export default function Nav() {
                     <li>Modifier keys (Ctrl, Cmd, Shift, Alt) preserve normal link behavior (open in new tab, etc.)</li>
                     <li>Right-clicks and middle-clicks work normally</li>
                     <li>
-                        <strong>Automatic prefetching:</strong> When users hover over or focus on a link, the page chunk is preloaded in the background for instant navigation
+                        <strong>Route preloading:</strong> Hovering or focusing a link calls the route preload hook. HeliumTS 0.9.6 eagerly imports page modules, so this does not
+                        create separate page chunks.
                     </li>
                 </ul>
 
                 <Heading level={3}>Prefetching</Heading>
-                <p>Links automatically prefetch page chunks on hover and focus (keyboard navigation). This means when a user clicks a link, the page is often already loaded:</p>
+                <p>
+                    Links call route preload hooks on hover and keyboard focus. Pages are already eagerly imported in this release; use explicit dynamic imports for application
+                    code that should load separately.
+                </p>
                 <CodeBlock
                     code={`// Prefetching enabled by default
 <Link href="/heavy-page">Heavy Page</Link>

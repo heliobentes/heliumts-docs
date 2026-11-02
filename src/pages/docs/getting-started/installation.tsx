@@ -14,8 +14,12 @@ export default function Installation() {
                 Installation
             </Heading>
 
+            <p>Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. The examples below target HeliumTS 0.9.6.</p>
+
             <div className="flex gap-3 my-4 text-sm">
-                <div
+                <button
+                    type="button"
+                    aria-pressed={mode === "default"}
                     className={cn(
                         "text-medium rounded-full px-3 py-1 cursor-pointer transition-all",
                         mode === "default" ? "bg-teal-600 text-white" : "bg-gray-100 hover:bg-gray-200"
@@ -23,8 +27,10 @@ export default function Installation() {
                     onClick={() => setMode("default")}
                 >
                     Default
-                </div>
-                <div
+                </button>
+                <button
+                    type="button"
+                    aria-pressed={mode === "manual"}
                     className={cn(
                         "text-medium rounded-full px-3 py-1 cursor-pointer transition-all",
                         mode === "manual" ? "bg-teal-600 text-white" : "bg-gray-100 hover:bg-gray-200"
@@ -32,7 +38,7 @@ export default function Installation() {
                     onClick={() => setMode("manual")}
                 >
                     Manual
-                </div>
+                </button>
             </div>
 
             {mode === "default" ? (
@@ -120,12 +126,16 @@ npm create heliumts-app@latest my-app -- --no-tailwind`}
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         1. Install React + Vite
                     </Heading>
-                    <CodeBlock code="npm create vite@latest my-helium-app -- --template react-ts" language="bash" />
+                    <CodeBlock code="npm create vite@7 my-helium-app -- --template react-ts" language="bash" />
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         2. Install HeliumTS
                     </Heading>
-                    <CodeBlock code="npm install heliumts" language="bash" />
+                    <CodeBlock
+                        code={`npm install heliumts@^0.9.6
+npm install --save-dev vite@^7.3.7`}
+                        language="bash"
+                    />
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         3. Setup Vite Config
@@ -193,8 +203,8 @@ export default function App({ Component, pageProps }: AppShellProps) {
                         <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">
                             <strong>Note:</strong>
                             <p>
-                                For your RPC methods to be type-safe and your IDE recognize Helium imports, make sure you are running the development server with{" "}
-                                <code>npx helium dev</code> as described below.
+                                Helium generates RPC types when you run <code>npx helium dev</code> or <code>npx helium build</code>. Keep the generated{" "}
+                                <code>src/types/heliumts-server.d.ts</code> file included in your TypeScript project.
                             </p>
                         </div>
                     </div>

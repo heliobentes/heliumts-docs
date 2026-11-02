@@ -85,7 +85,7 @@ function CreateTaskForm() {
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 <code>boolean</code>
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-600">Whether a call is in progress</td>
+                            <td className="px-6 py-4 text-sm text-gray-600">Whether one or more calls from this hook are still in progress</td>
                         </tr>
                         <tr className="hover:bg-gray-50">
                             <td className="px-6 py-4 text-sm text-gray-900">
@@ -103,7 +103,7 @@ function CreateTaskForm() {
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 <code>RpcStats | null</code>
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-600">RPC statistics (timing, etc.)</td>
+                            <td className="px-6 py-4 text-sm text-gray-600">Rate-limit statistics: remaining requests and seconds until the limit resets</td>
                         </tr>
                     </tbody>
                 </table>

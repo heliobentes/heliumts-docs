@@ -67,6 +67,14 @@ export default function TasksPage() {
             />
 
             <Heading level={2} className="mt-10">
+                Retries and Mutation Safety
+            </Heading>
+            <p>
+                Connection failures and timeouts may trigger automatic retries. A mutation can finish on the server before its response is lost, so a retry can execute it again.
+                Use an idempotency key or a database constraint for operations such as payments and order creation; the transport does not guarantee exactly-once execution.
+            </p>
+
+            <Heading level={2} className="mt-10">
                 Public errors in production
             </Heading>
             <p>

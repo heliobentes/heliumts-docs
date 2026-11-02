@@ -205,7 +205,7 @@ export default function DocsLayout({ children }: LayoutProps) {
                     <nav className="space-y-2 pb-10 pr-1">
                         <div className="mb-4">
                             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Version</div>
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.8.7</span>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-100 text-teal-800">v0.9.6</span>
                         </div>
                         {menuItems.map((section, i) => (
                             <div key={i}>
@@ -247,12 +247,12 @@ export default function DocsLayout({ children }: LayoutProps) {
                         <strong>Note:</strong>
                         <p>
                             HeliumTS is under active development. Expect bugs and breaking changes. If you find any issues, please report them in{" "}
-                            <a href="https://github.com/heliobentes/heliumts//issues" target="_blank" className="underline hover:text-yellow-900">
+                            <a href="https://github.com/heliobentes/heliumts/issues" target="_blank" rel="noopener noreferrer" className="underline hover:text-yellow-900">
                                 our GitHub <IconExternalLink className="inline-block size-4 mb-1 ml-1" />
                             </a>
                         </p>
                         <p>
-                            <i>A stable release is planned for early 2026.</i>
+                            <span>Version 0.9.6 includes fixes for RPC batching, routing, SSR and SSG, configuration loading, and worker cleanup.</span>
                         </p>
                     </div>
 

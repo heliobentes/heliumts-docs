@@ -13,6 +13,7 @@ import {
     IconDeviceDesktopCode,
     IconFileCode,
     IconFolder,
+    IconHierarchy,
     IconKeyframeAlignCenter,
     IconLink,
     IconRoute,
@@ -22,7 +23,6 @@ import {
     IconSparkles,
     IconTerminal,
     IconWorld,
-    IconHierarchy,
 } from "@tabler/icons-react";
 import React from "react";
 

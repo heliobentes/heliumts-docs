@@ -32,8 +32,8 @@ export default function RouteGroups() {
                     language="plaintext"
                 />
                 <p>
-                    In the example above, <code>(website)</code>, <code>(portal)</code>, and <code>(auth)</code> are organizational folders only. They never appear in the
-                    browser URL.
+                    In the example above, <code>(website)</code>, <code>(portal)</code>, and <code>(auth)</code> are organizational folders only. They never appear in the browser
+                    URL.
                 </p>
             </section>
 
@@ -49,7 +49,10 @@ export default function RouteGroups() {
 
             <section className="space-y-4">
                 <Heading level={2}>Layouts and Hierarchy</Heading>
-                <p>Layouts are resolved using the real folder structure, including route groups. That means group layouts stay isolated, while the root layout still wraps everything.</p>
+                <p>
+                    Layouts are resolved using the real folder structure, including route groups. That means group layouts stay isolated, while the root layout still wraps
+                    everything.
+                </p>
                 <CodeBlock
                     code={`src/pages/
 ├── _layout.tsx                    # RootLayout - all pages
@@ -91,7 +94,9 @@ export default function RouteGroups() {
 Only the first file will be used.`}
                     language="plaintext"
                 />
-                <p>Common collision sources are duplicate <code>index.tsx</code> files, repeated filenames across groups, or mixing grouped and non-grouped pages for the same URL.</p>
+                <p>
+                    Common collision sources are duplicate <code>index.tsx</code> files, repeated filenames across groups, or mixing grouped and non-grouped pages for the same URL.
+                </p>
             </section>
 
             <section className="space-y-4">
@@ -99,7 +104,9 @@ Only the first file will be used.`}
                 <ol className="list-decimal list-inside space-y-1 ml-4">
                     <li>Use the root layout for global providers and chrome.</li>
                     <li>Use group layouts for section-specific navigation, auth gates, or themes.</li>
-                    <li>Choose descriptive group names like <code>(marketing)</code>, <code>(app)</code>, or <code>(admin)</code>.</li>
+                    <li>
+                        Choose descriptive group names like <code>(marketing)</code>, <code>(app)</code>, or <code>(admin)</code>.
+                    </li>
                     <li>Avoid deep nesting unless the UI hierarchy genuinely needs it.</li>
                 </ol>
             </section>

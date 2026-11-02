@@ -15,7 +15,7 @@ The documentation site is built using:
 
 ### Prerequisites
 
-- Node.js (Latest LTS recommended)
+- Node.js 20.19+ or 22.12+
 - npm
 
 ### Installation

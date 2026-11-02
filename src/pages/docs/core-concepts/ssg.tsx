@@ -55,6 +55,25 @@ export default function AboutPage() {
             </section>
 
             <section className="space-y-4">
+                <Heading level={2}>Layouts, App Shells, and Output</Heading>
+                <p>
+                    SSG uses the same optional app shell, nested layouts, and page-transition wrappers as client rendering. Static pages receive <code>params: {`{}`}</code> and an
+                    empty <code>URLSearchParams</code> as <code>searchParams</code>. Use SSR for request-dependent HTML.
+                </p>
+                <CodeBlock
+                    code={`dist/
+├── index.ssg.html   # pre-rendered home page, served for /
+├── index.html       # empty SPA fallback for other routes
+└── about.html       # pre-rendered /about page`}
+                    language="text"
+                />
+                <p>
+                    Dynamic routes are skipped because build-time parameter generation is not supported. Sidecars, declaration files, layouts, and the <code>_app</code> shell are
+                    excluded from page discovery.
+                </p>
+            </section>
+
+            <section className="space-y-4">
                 <Heading level={2}>SSG vs SSR</Heading>
                 <p>
                     Use SSG when the HTML can be generated once at build time. Use <code>"use ssr";</code> when the markup depends on per-request data such as authenticated users,
