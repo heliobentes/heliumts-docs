@@ -6,7 +6,7 @@ This repository contains the source code for the official documentation of [Heli
 
 The documentation site is built using:
 
-- **HeliumTS**: The framework itself.
+- **HeliumTS 0.10.1**: HTTP-only typed RPC and streaming.
 - **React**: UI library.
 - **Vite**: Build tool.
 - **TailwindCSS**: Styling.
@@ -62,3 +62,9 @@ npm run start
     - `docs/`: Documentation content pages (CLI, Configuration, Routing, etc.).
 - `src/components/`: Reusable UI components.
 - `helium.config.ts`: Configuration for the Helium server.
+
+## Streaming and migration
+
+Open `/streaming` for the deterministic streaming demo. It uses `defineMethod(async function*)` and `useStreaming` without a provider SDK or credentials. The guide is at `/docs/core-concepts/rpc/streaming`; `/docs/getting-started/migration-0-10` explains removed connection APIs and config.
+
+Run `npm test` for the deterministic streaming, cancellation, and partial-error regressions.

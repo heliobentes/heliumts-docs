@@ -1,207 +1,89 @@
 "use ssg";
+import { Link } from "heliumts/client";
+
 import CodeBlock from "../../../components/CodeBlock";
 import Heading from "../../../components/Heading";
 
-export default function OpenAIGuide() {
+export default function LLMStreaming() {
     return (
         <div className="space-y-6">
-            <Heading level={1}>Using OpenAI API</Heading>
+            <Heading level={1}>LLM Streaming</Heading>
+            <p>
+                Keep provider calls and credentials on the server. Forward your provider's async text stream from a typed method and consume it with <code>useStreaming</code>.
+                Helium requires no LLM SDK and the component needs no custom fetch or reader.
+            </p>
+            <p>
+                <Link href="/streaming" className="text-teal-600 underline">
+                    Try the deterministic demo first
+                </Link>
+                . It needs no API key or provider account.
+            </p>
+            <Heading level={2}>Provider-agnostic server adapter</Heading>
+            <p>
+                The following recipe assumes an app-defined <code>provider.generate</code> adapter returning <code>{`{ textStream: AsyncIterable<string> }`}</code>. Map its{" "}
+                <code>signal</code> to your provider SDK's cancellation option and configure credentials in server environment variables. The adapter is application code, not a
+                Helium dependency.
+            </p>
+            <CodeBlock
+                language="typescript"
+                code={`// src/server/assistant.ts
+import { defineMethod, PublicError } from "heliumts/server";
+import { provider } from "../lib/provider"; // Your server-side adapter.
 
-            <p>This guide shows how to integrate OpenAI's API with HeliumTS for both streaming and non-streaming completions.</p>
-
-            <div className="space-y-4">
-                <Heading level={2}>Setup</Heading>
-                <p>First, install the OpenAI SDK:</p>
-                <CodeBlock code={`npm install openai`} language="bash" />
-                <p>Add your API key to your environment variables:</p>
-                <CodeBlock code={`OPENAI_API_KEY=sk-...`} language="bash" />
-            </div>
-
-            <div className="space-y-4">
-                <Heading level={2}>Non-Streaming Example (RPC)</Heading>
-                <p>For simple request-response patterns, use RPC:</p>
-                <CodeBlock
-                    code={`import { defineMethod } from "heliumts/server";
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
-export const chatCompletion = defineMethod(async (data: { message: string }, ctx) => {
-    if (!data.message) {
-        throw new Error("Message is required");
-    }
-    
-    try {
-        const completion = await openai.chat.completions.create({
-            model: "gpt-4",
-            messages: [{ role: "user", content: data.message }],
-        });
-        
-        const response = completion.choices[0]?.message?.content || "";
-        
-        return {
-            response,
-            usage: completion.usage,
-        };
-    } catch (error) {
-        console.error("OpenAI API error:", error);
-        throw new Error("Failed to get completion");
+export const streamAssistant = defineMethod(async function* (
+    { prompt }: { prompt: string }, ctx
+) {
+    if (!prompt.trim()) throw new PublicError("Enter a prompt.");
+    const result = await provider.generate({ prompt, signal: ctx.signal });
+    for await (const text of result.textStream) {
+        if (ctx.signal.aborted) return;
+        yield text;
     }
 });`}
-                    language="typescript"
-                />
-                <p className="mt-4">Client-side usage:</p>
-                <CodeBlock
-                    code={`import { useCall } from "heliumts/client";
-import { chatCompletion } from "heliumts/server";
+            />
+            <Heading level={2}>React component</Heading>
+            <CodeBlock
+                language="tsx"
+                code={`import { useState } from "react";
+import { useStreaming } from "heliumts/client";
+import { streamAssistant } from "heliumts/server";
 
-export default function ChatPage() {
-    const { call, data, loading, error } = useCall(chatCompletion);
-    
-    const handleSendMessage = async (message: string) => {
-        const result = await call({ message });
-        console.log(result.response);
-    };
-    
+export default function Assistant() {
+    const [prompt, setPrompt] = useState("");
+    const { text, error, isStreaming, start, cancel, reset } =
+        useStreaming(streamAssistant);
+
     return (
-        <div>
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
-            {data && <p>{data.response}</p>}
-        </div>
+        <form onSubmit={(event) => {
+            event.preventDefault();
+            void start({ prompt });
+        }}>
+            <label>Prompt <input value={prompt}
+                onChange={(event) => setPrompt(event.target.value)} /></label>
+            <button disabled={!prompt.trim()}>{isStreaming ? "Restart" : "Send"}</button>
+            <button type="button" onClick={cancel}>Cancel</button>
+            <button type="button" onClick={reset}>Reset</button>
+            <output>{text}</output>
+            {error && <p role="alert">{error}</p>}
+        </form>
     );
 }`}
-                    language="typescript"
-                />
-            </div>
-
-            <div className="space-y-4">
-                <Heading level={2}>Streaming Example (HTTP)</Heading>
-                <p>For real-time chat interfaces with token-by-token streaming, use HTTP handlers:</p>
-                <CodeBlock
-                    code={`import { defineHTTPRequest } from "heliumts/server";
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
-export const chatCompletionStream = defineHTTPRequest("POST", "/api/chat/stream", async (req, ctx) => {
-    const { message } = (await req.json()) as { message: string };
-    
-    if (!message) {
-        return new Response(JSON.stringify({ error: "Message is required" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    
-    try {
-        const stream = await openai.chat.completions.create({
-            model: "gpt-4",
-            messages: [{ role: "user", content: message }],
-            stream: true,
-        });
-        
-        // Create a ReadableStream from the OpenAI stream
-        const readableStream = new ReadableStream({
-            async start(controller) {
-                try {
-                    for await (const chunk of stream) {
-                        const content = chunk.choices[0]?.delta?.content || "";
-                        if (content) {
-                            // Send as SSE format
-                            const data = \`data: \${JSON.stringify({ content })}\\n\\n\`;
-                            controller.enqueue(new TextEncoder().encode(data));
-                        }
-                    }
-                    controller.enqueue(new TextEncoder().encode("data: [DONE]\\n\\n"));
-                    controller.close();
-                } catch (error) {
-                    controller.error(error);
-                }
-            },
-        });
-        
-        return new Response(readableStream, {
-            status: 200,
-            headers: {
-                "Content-Type": "text/event-stream",
-                "Cache-Control": "no-cache",
-                Connection: "keep-alive",
-            },
-        });
-    } catch (error) {
-        console.error("OpenAI API error:", error);
-        
-        return new Response(
-            JSON.stringify({ error: "Failed to get completion" }),
-            {
-                status: 500,
-                headers: { "Content-Type": "application/json" },
-            }
-        );
-    }
-});`}
-                    language="typescript"
-                />
-            </div>
-
-            <div className="space-y-4">
-                <Heading level={2}>Client-Side Usage</Heading>
-                <p>Example of consuming the streaming endpoint from the client:</p>
-                <CodeBlock
-                    code={`async function streamChat(message: string) {
-    const response = await fetch("/api/chat/stream", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-    });
-    
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
-    
-    while (true) {
-        const { done, value } = await reader!.read();
-        if (done) break;
-        
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\\n");
-        
-        for (const line of lines) {
-            if (line.startsWith("data: ")) {
-                const data = line.slice(6);
-                if (data === "[DONE]") {
-                    console.log("Stream complete");
-                    return;
-                }
-                
-                const parsed = JSON.parse(data);
-                console.log(parsed.content); // Display token
-            }
-        }
-    }
-}`}
-                    language="typescript"
-                />
-            </div>
-
-            <div className="space-y-4">
-                <Heading level={2}>Best Practices</Heading>
-                <ul className="list-disc list-inside space-y-1 ml-4">
-                    <li>Always validate user input before sending to OpenAI</li>
-                    <li>Implement rate limiting to prevent API abuse</li>
-                    <li>Use environment variables for API keys</li>
-                    <li>Handle errors gracefully and provide user feedback</li>
-                    <li>Consider adding authentication to protect your endpoints</li>
-                    <li>Monitor API usage and costs</li>
-                    <li>Use streaming for better user experience in chat interfaces</li>
-                </ul>
-            </div>
+            />
+            <Heading level={2}>Cancellation and partial failures</Heading>
+            <p>
+                Cancel, restart, and unmount abort the active HTTP stream. Passing <code>ctx.signal</code> upstream lets the provider stop its own work. Already received text
+                remains visible on cancellation or failure; show the hook's string <code>error</code> separately. A stream is never automatically replayed, so a failed generation
+                does not silently start and charge for another request.
+            </p>
+            <p>
+                Apply your auth, input validation, quotas, and provider-specific error handling in method middleware and the server adapter. Use a positive <code>timeoutMs</code>{" "}
+                when you need a different idle limit, and ensure hosting proxies flush chunks instead of buffering the complete reply.
+            </p>
+            <p>
+                <Link href="/docs/core-concepts/rpc/streaming" className="text-teal-600 underline">
+                    See all useStreaming fields, callbacks, and lifecycle behavior.
+                </Link>
+            </p>
         </div>
     );
 }

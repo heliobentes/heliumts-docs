@@ -60,6 +60,7 @@ export const menuItems: MenuSection[] = [
                 icon: IconFolder,
                 href: "/docs/getting-started/project-structure",
             },
+            { title: "Migrating to 0.10", icon: IconArrowsShuffle, href: "/docs/getting-started/migration-0-10" },
             {
                 title: "Example App",
                 icon: IconAppWindow,
@@ -79,6 +80,7 @@ export const menuItems: MenuSection[] = [
                     { title: "Overview", icon: IconServer, href: "/docs/core-concepts/rpc" },
                     { title: "Data Fetching", icon: IconDatabaseSearch, href: "/docs/core-concepts/rpc/data-fetching" },
                     { title: "Data Mutation", icon: IconDatabaseEdit, href: "/docs/core-concepts/rpc/data-mutation" },
+                    { title: "Streaming", icon: IconSparkles, href: "/docs/core-concepts/rpc/streaming" },
                     { title: "Examples", icon: IconCode, href: "/docs/core-concepts/rpc/examples" },
                 ],
             },
@@ -125,7 +127,7 @@ export const menuItems: MenuSection[] = [
         items: [
             { title: "Authentication", icon: IconShield, href: "/docs/guides/authentication" },
             { title: "Stripe Integration", icon: IconCloudDollar, href: "/docs/guides/stripe" },
-            { title: "OpenAI API", icon: IconSparkles, href: "/docs/guides/openai" },
+            { title: "LLM Streaming", icon: IconSparkles, href: "/docs/guides/openai" },
         ],
     },
     {

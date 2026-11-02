@@ -1,17 +1,12 @@
 import type { HeliumConfig } from "heliumts/server";
 
 const config: HeliumConfig = {
-    trustProxyDepth: 1, // Trust 1 proxy level (e.g., Vercel)
+    trustProxyDepth: 1, // The deployed site has one trusted reverse proxy.
     rpc: {
-        transport: "websocket",
-        autoHttpOnMobile: false,
-        compression: {
-            enabled: true,
-            threshold: 1024,
-        },
+        maxBodySize: 1_048_576,
+        maxBatchSize: 20,
         security: {
-            maxConnectionsPerIP: 10,
-            maxMessagesPerWindow: 200,
+            maxRequestsPerWindow: 200,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },

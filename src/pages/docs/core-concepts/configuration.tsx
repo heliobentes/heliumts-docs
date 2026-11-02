@@ -7,7 +7,7 @@ export default function Configuration() {
         <div className="space-y-6">
             <Heading level={1}>Configuration</Heading>
             <p>
-                Helium&apos;s configuration file lets you customize server behavior, RPC transport, security, payload limits, and proxy handling from one place. Create
+                Helium&apos;s configuration file lets you customize server behavior, HTTP RPC security, payload limits, and proxy handling from one place. Create
                 <code> helium.config.ts</code>, <code>helium.config.js</code>, or <code>helium.config.mjs</code> in your project root.
             </p>
 
@@ -74,56 +74,9 @@ export default config;`}
                 RPC Configuration
             </Heading>
 
-            <Heading level={3} className="mt-6">
-                Transport Mode
-            </Heading>
-            <CodeBlock
-                code={`const config: HeliumConfig = {
-    rpc: {
-        transport: "websocket",  // "websocket" | "http" | "auto"
-        autoHttpOnMobile: false,
-    },
-};`}
-                language="typescript"
-            />
-            <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>
-                    <code>websocket</code> (default): shares a persistent WebSocket connection across calls.
-                </li>
-                <li>
-                    <code>http</code>: sends RPC calls in HTTP requests; the browser can reuse HTTP connections.
-                </li>
-                <li>
-                    <code>auto</code>: chooses transport based on network and device conditions.
-                </li>
-                <li>
-                    <code>autoHttpOnMobile</code>: if <code>true</code>, mobile devices prefer HTTP even when connected to Wi-Fi.
-                </li>
-            </ul>
-
             <p>
-                HTTP calls queued together are split into concurrent batches of at most <code>rpc.maxBatchSize</code> calls (default 20). Message rate limits apply to WebSocket
-                connections and to HTTP RPC requests per client IP.
-            </p>
-
-            <Heading level={3} className="mt-6">
-                Compression
-            </Heading>
-            <CodeBlock
-                code={`const config: HeliumConfig = {
-    rpc: {
-        compression: {
-            enabled: true,
-            threshold: 1024,
-        },
-    },
-};`}
-                language="typescript"
-            />
-            <p>
-                These WebSocket settings control framework gzip and negotiated per-message deflate: responses at or below <code>threshold</code> skip both stages, and
-                <code> enabled: false</code> disables both. HTTP RPC response compression is negotiated separately through <code>Accept-Encoding</code>. Compression can reduce
-                transferred bytes while adding CPU work; compare response times and wire sizes for your payloads.
+                All RPC uses HTTP. Calls queued together are split into concurrent batches of at most <code>rpc.maxBatchSize</code> calls (default 20). Per-IP request windows apply
+                to ordinary and streaming RPC requests. HTTP response compression is negotiated automatically; there is no transport or socket-compression configuration.
             </p>
 
             <Heading level={3} className="mt-6">
@@ -133,8 +86,7 @@ export default config;`}
                 code={`const config: HeliumConfig = {
     rpc: {
         security: {
-            maxConnectionsPerIP: 10,
-            maxMessagesPerWindow: 100,
+            maxRequestsPerWindow: 100,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },
@@ -144,10 +96,7 @@ export default config;`}
             />
             <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>
-                    <code>maxConnectionsPerIP</code> defaults to <code>10</code>. Set <code>0</code> to disable.
-                </li>
-                <li>
-                    <code>maxMessagesPerWindow</code> defaults to <code>100</code>. Set <code>0</code> to disable.
+                    <code>maxRequestsPerWindow</code> defaults to <code>100</code>. Set <code>0</code> to disable.
                 </li>
                 <li>
                     <code>rateLimitWindowMs</code> defaults to <code>60000</code>.
@@ -163,7 +112,6 @@ export default config;`}
             <CodeBlock
                 code={`const config: HeliumConfig = {
     rpc: {
-        maxWsPayload: 10_485_760,
         maxBodySize: 10_485_760,
         maxBatchSize: 50,
     },
@@ -172,15 +120,14 @@ export default config;`}
             />
             <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>
-                    <code>maxWsPayload</code> default: <code>1048576</code> (1 MB).
-                </li>
-                <li>
                     <code>maxBodySize</code> default: <code>1048576</code> (1 MB).
                 </li>
                 <li>
                     <code>maxBatchSize</code> default: <code>20</code>.
                 </li>
             </ul>
+
+            <p>RPC request values may nest up to 128 containers (arrays and objects). This decoding limit applies in addition to the body-size and batch limits.</p>
 
             <Heading level={2} className="mt-8">
                 Proxy Configuration
@@ -216,19 +163,11 @@ export default config;`}
 const config: HeliumConfig = {
     trustProxyDepth: 1,
     rpc: {
-        transport: "websocket",
-        autoHttpOnMobile: false,
-        compression: {
-            enabled: true,
-            threshold: 1024,
-        },
         security: {
-            maxConnectionsPerIP: 10,
-            maxMessagesPerWindow: 100,
+            maxRequestsPerWindow: 100,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },
-        maxWsPayload: 10_485_760,
         maxBodySize: 10_485_760,
         maxBatchSize: 50,
     },
@@ -250,13 +189,8 @@ const isProduction = process.env.NODE_ENV === "production";
 const config: HeliumConfig = {
     trustProxyDepth: isProduction ? 1 : 0,
     rpc: {
-        compression: {
-            enabled: isProduction,
-            threshold: 1024,
-        },
         security: {
-            maxConnectionsPerIP: isDevelopment ? 100 : 10,
-            maxMessagesPerWindow: isDevelopment ? 1000 : 100,
+            maxRequestsPerWindow: isDevelopment ? 1000 : 100,
             rateLimitWindowMs: 60000,
             tokenValidityMs: 30000,
         },

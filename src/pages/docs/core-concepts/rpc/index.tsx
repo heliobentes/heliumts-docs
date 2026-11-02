@@ -11,16 +11,15 @@ export default function RPCOverview() {
             </p>
 
             <Heading level={2} className="mt-8">
-                Choosing a Transport
+                HTTP RPC
             </Heading>
             <p>
-                Helium supports WebSocket and HTTP RPC through the same client API. WebSocket calls share a persistent connection; HTTP/2 and HTTP/3 can also reuse connections.
-                MessagePack can reduce payload size, but encoding, compression, network latency, and proxy routing all affect response time. Neither transport is always faster.
-            </p>
-            <p>
-                Measure both on your deployment with representative payloads. The <a href="/speed-test">live benchmark</a> compares deterministic in-memory data without database
-                work; its results describe the current test conditions. Browser network emulation can apply latency differently to HTTP requests and WebSocket messages, so a
-                DevTools preset does not establish how either performs on a real cellular network.
+                Helium handles HTTP requests, MessagePack serialization, batching, and typed responses. Use <code>useFetch</code> for cached reads, <code>useCall</code> for
+                mutations, and <code>callMethod</code> for promises outside hooks. For incremental replies, define an async generator and use{" "}
+                <a href="/docs/core-concepts/rpc/streaming" className="text-teal-600 underline">
+                    useStreaming
+                </a>
+                .
             </p>
 
             <Heading level={2} className="mt-8">
@@ -84,33 +83,27 @@ export default function TasksPage() {
             </Heading>
             <p>
                 Use <code>callMethod</code> in event handlers or client utilities when you want a promise without hook state. Arguments and results are inferred from the method
-                stub. The response includes <code>data</code>, rate-limit <code>stats</code>, and the actual <code>transport</code> used.
+                stub. The response includes <code>data</code> and rate-limit <code>stats</code>.
             </p>
             <CodeBlock
                 code={`import { callMethod } from "heliumts/client";
 import { getTasks } from "heliumts/server";
 
-const { data, stats, transport } = await callMethod(getTasks, { status: "open" });
-// data is inferred from getTasks; transport is "http" or "websocket".
-
-const websocketResult = await callMethod(
-    getTasks,
-    { status: "open" },
-    { transport: "websocket" } // Optional: "http" is also supported.
-);`}
+const { data, stats } = await callMethod(getTasks, { status: "open" });
+// Arguments and data are inferred from getTasks. No hook state is updated.`}
                 language="typescript"
             />
             <p>
-                Omit the option to use configured transport selection and fallback. An explicit transport keeps bounded retries on that transport and never falls back to the other.
-                Unlike <code>useCall</code>, this function does not update hook state or invalidate cached queries; handle those updates yourself when needed.
+                Unlike <code>useCall</code>, this function does not update hook state or invalidate cached queries. Handle those updates yourself when needed.
             </p>
 
             <Heading level={2} className="mt-10">
                 Retries and Mutation Safety
             </Heading>
             <p>
-                Connection failures and timeouts may trigger automatic retries. A mutation can finish on the server before its response is lost, so a retry can execute it again.
-                Use an idempotency key or a database constraint for operations such as payments and order creation; the transport does not guarantee exactly-once execution.
+                Network failures and server errors are not automatically replayed. An expired request token may be refreshed after an authorization rejection before retrying. If
+                you choose to retry a mutation yourself after a lost response, use an idempotency key or database constraint for operations such as payments and order creation.
+                Streams are never replayed automatically.
             </p>
 
             <Heading level={2} className="mt-10">

@@ -16,7 +16,7 @@ export default function PageTransitions() {
                     <p className="font-semibold text-teal-800 mb-2">How It Works:</p>
                     <ol className="list-decimal list-inside space-y-1 text-teal-700">
                         <li>
-                            <strong>Page Loading:</strong> Pages are eagerly imported in 0.9.6; transitions coordinate rendering rather than automatically splitting page bundles
+                            <strong>Page Loading:</strong> Pages are eagerly imported in 0.10.1; transitions coordinate rendering rather than automatically splitting page bundles
                         </li>
                         <li>
                             <strong>Preload Hooks:</strong> Link components call route preload hooks on hover and focus

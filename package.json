@@ -9,12 +9,12 @@
         "start": "helium start",
         "lint": "eslint .",
         "preview": "vite preview",
-        "test": "node --test tests/benchmark.test.mjs"
+        "test": "node --test tests/streaming.test.mjs"
     },
     "dependencies": {
         "@tabler/icons-react": "^3.35.0",
         "@tailwindcss/vite": "^4.1.17",
-        "heliumts": "^0.9.7",
+        "heliumts": "^0.10.1",
         "prism-react-renderer": "^2.4.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",

@@ -7,8 +7,7 @@ export default function RPCDataFetching() {
         <div className="space-y-6">
             <Heading level={1}>Data Fetching</Heading>
             <p>
-                HeliumTS provides the <code>useFetch</code> hook for data fetching. It communicates with the server over WebSocket or HTTP RPC, selected by your configuration, and
-                shares cached results between matching calls.
+                HeliumTS provides the <code>useFetch</code> hook for data fetching. It communicates with the server over HTTP RPC and shares cached results between matching calls.
             </p>
 
             <Heading level={2} className="mt-8">

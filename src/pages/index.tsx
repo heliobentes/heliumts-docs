@@ -80,26 +80,21 @@ export default function Home() {
                 </div>
             </div>
             <div className="pt-10 border-t border-gray-200">
-                <h2 className="text-3xl font-semibold text-center my-6">Typed server calls over shared connections</h2>
+                <h2 className="text-3xl font-semibold text-center my-6">Typed calls and streaming over HTTP</h2>
                 <p className="text-lg text-gray-500 text-center mt-2 max-w-3xl mx-auto">
-                    Use the same typed API for queries and mutations over a persistent WebSocket connection or HTTP. Your network, payload, compression, and hosting path determine
-                    how quickly each call completes.
+                    Use one server-method API for queries, mutations, and incremental replies. Helium handles HTTP requests, MessagePack, batching, and typed chunks so your React
+                    components can focus on the interface.
                 </p>
-                <p className="text-gray-500 text-center mt-4 max-w-3xl mx-auto">
-                    MessagePack can reduce payload size, but fewer bytes do not guarantee lower latency. HTTP/2 and HTTP/3 also reuse connections, so compare both transports on the
-                    networks and deployment your app uses.
-                </p>
-
                 <div className="py-10 max-w-4xl mx-auto">
                     <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
-                        <h3 className="text-xl font-semibold mb-3">Try the live benchmark</h3>
+                        <h3 className="text-xl font-semibold mb-3">Stream a reply with useStreaming</h3>
                         <p className="text-gray-500 max-w-2xl mx-auto">
-                            Compare request, transfer, and decoding time for 1,000 deterministic tasks held in memory. This measures transport behavior without database work;
-                            results vary with your connection and the servers between you and the app.
+                            Define an async generator with defineMethod, then start, cancel, and restart it from a typed React hook. Try a deterministic demo with no API key or
+                            database.
                         </p>
                         <div className="mt-6">
-                            <Link href="/speed-test" className="button primary">
-                                Run the benchmark
+                            <Link href="/streaming" className="button primary">
+                                Try streaming
                             </Link>
                         </div>
                     </div>
@@ -111,7 +106,9 @@ export default function Home() {
                             <IconBolt size={32} />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Zero-API Boilerplate</h3>
-                        <p className="text-gray-500">Call typed server methods from your components with useFetch and useCall, without writing custom request plumbing.</p>
+                        <p className="text-gray-500">
+                            Call typed server methods from your components with useFetch, useCall, and useStreaming, without writing custom request plumbing.
+                        </p>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">

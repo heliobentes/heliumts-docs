@@ -73,33 +73,21 @@ export const dailyCleanup = defineWorker(
             </section>
 
             <section className="space-y-4">
-                <Heading level={2}>Real-time Data Sync</Heading>
+                <Heading level={2}>Periodic Data Sync</Heading>
                 <CodeBlock
+                    language="typescript"
                     code={`import { defineWorker } from "heliumts/server";
 
-export const priceSync = defineWorker(
-    (ctx) => {
-        const ws = new WebSocket("wss://api.exchange.com/prices");
-
-        ws.on("message", async (data) => {
-            const prices = JSON.parse(data.toString());
-            await updatePricesInDatabase(prices);
-            await notifySubscribers(prices);
+export const priceSync = defineWorker(async (ctx) => {
+    while (!ctx.signal.aborted) {
+        const response = await fetch("https://api.example.com/prices", {
+            signal: ctx.signal,
         });
-
-        ws.on("close", () => {
-            throw new Error("WebSocket connection closed");
-        });
-
-        return () => ws.close();
-    },
-    {
-        name: "priceSync",
-        autoRestart: true,
-        restartDelayMs: 5000,
+        if (!response.ok) throw new Error("Price sync failed");
+        await updatePricesInDatabase(await response.json());
+        await new Promise((resolve) => setTimeout(resolve, 5000));
     }
-);`}
-                    language="typescript"
+}, { name: "priceSync", autoRestart: true, restartDelayMs: 5000 });`}
                 />
             </section>
 

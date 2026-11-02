@@ -8,7 +8,7 @@ export default function ContextAPI() {
             <Heading level={1}>Context API</Heading>
             <p>
                 Every RPC method and HTTP handler in Helium receives a <code>HeliumContext</code> object as the second parameter. This context provides access to request metadata,
-                including the client IP, headers, and other connection information.
+                including the client IP, fresh request headers, and cancellation signal.
             </p>
 
             <Heading level={2} className="mt-8">
@@ -16,6 +16,7 @@ export default function ContextAPI() {
             </Heading>
             <CodeBlock
                 code={`interface HeliumContext {
+    signal: AbortSignal; // Cancellation for this request and upstream work.
     req: {
         ip: string; // Client IP (respects trustProxyDepth config)
         headers: http.IncomingHttpHeaders; // Request headers
@@ -42,8 +43,8 @@ export const getClientInfo = defineMethod(async (args, ctx) => {
     const userAgent = ctx.req.headers["user-agent"];
     const acceptLanguage = ctx.req.headers["accept-language"];
 
-    // Access WebSocket upgrade request details
-    console.log("Connection URL:", ctx.req.url);
+    // Access the current HTTP RPC request details
+    console.log("Request URL:", ctx.req.url);
 
     return {
         ip: ctx.req.ip,
@@ -76,6 +77,14 @@ export const apiEndpoint = defineHTTPRequest("POST", "/api/data", async (req, ct
 });`}
                 language="typescript"
             />
+
+            <Heading level={2} className="mt-8">
+                Request cancellation
+            </Heading>
+            <p>
+                Pass <code>ctx.signal</code> to upstream fetches or provider adapters. The signal is aborted when the client cancels or disconnects. Each RPC call receives the
+                current HTTP request metadata, including updated session cookies; do not cache authentication based on a previous connection.
+            </p>
 
             <Heading level={2} className="mt-8">
                 Custom Context Properties

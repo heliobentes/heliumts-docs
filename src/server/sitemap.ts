@@ -28,7 +28,7 @@ function getUrls(items: (MenuItem | MenuSection)[]): string[] {
 }
 
 export const sitemap = defineHTTPRequest("GET", "/sitemap.xml", async () => {
-    const urls = getUrls(menuItems);
+    const urls = [...getUrls(menuItems), "/streaming"];
     // Add home page if not in menu
     if (!urls.includes("/")) {
         urls.unshift("/");

@@ -19,7 +19,7 @@ export default function WorkersOverview() {
                     <li>Scheduled jobs and cron-like tasks</li>
                     <li>Real-time data synchronization</li>
                     <li>Cache warmers and data pre-loaders</li>
-                    <li>WebSocket connection managers</li>
+                    <li>Periodic service synchronization</li>
                 </ul>
                 <p>
                     Workers eliminate the need for separate microservices or monorepo setups like Turborepo - everything runs in the same process, sharing the same code, services,
