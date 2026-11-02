@@ -2,6 +2,11 @@ import { Link, useStreaming } from "heliumts/client";
 import { streamText } from "heliumts/server";
 import { useState } from "react";
 
+const buttonClasses =
+    "inline-flex min-h-11 cursor-pointer items-center justify-center rounded-lg border px-4 py-2.5 text-center text-sm font-semibold transition-colors select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 disabled:cursor-not-allowed disabled:opacity-40";
+const primaryButtonClasses = `${buttonClasses} border-teal-700 bg-teal-700 text-white enabled:hover:border-teal-800 enabled:hover:bg-teal-800`;
+const secondaryButtonClasses = `${buttonClasses} border-slate-200 bg-white text-slate-700 enabled:hover:border-slate-300 enabled:hover:bg-slate-50`;
+
 const statusClasses = {
     Ready: "border-slate-200 bg-slate-50 text-slate-600",
     Streaming: "border-teal-200 bg-teal-50 text-teal-800",
@@ -81,13 +86,13 @@ export default function StreamingDemo() {
                             </p>
                         </div>
                         <div className="space-y-2">
-                            <button type="submit" className="button primary w-full justify-center" disabled={!name.trim()}>
+                            <button type="submit" className={`${primaryButtonClasses} w-full`} disabled={!name.trim()}>
                                 {hasRun ? "Restart" : "Start streaming"}
                             </button>
                             <div className="grid grid-cols-2 gap-2">
                                 <button
                                     type="button"
-                                    className="button secondary justify-center"
+                                    className={secondaryButtonClasses}
                                     disabled={!isStreaming}
                                     onClick={() => {
                                         cancel();
@@ -98,7 +103,7 @@ export default function StreamingDemo() {
                                 </button>
                                 <button
                                     type="button"
-                                    className="button secondary justify-center"
+                                    className={secondaryButtonClasses}
                                     disabled={!hasRun && !isStreaming && !error}
                                     onClick={() => {
                                         reset();

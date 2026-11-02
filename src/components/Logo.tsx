@@ -1,7 +1,7 @@
 export default function HeliumLogo() {
     return (
-        <span aria-hidden="true" className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-teal-700 font-mono text-base font-semibold text-white">
-            He
-        </span>
+        <div className="bg-teal-500 rounded-xl size-12 p-0.75 border border-teal-700 border-b-4 border-r-4 add-3d">
+            <div className="rounded-lg  border-white/50 flex items-center justify-center text-white font-semibold text-lg h-full w-full">He</div>
+        </div>
     );
 }
