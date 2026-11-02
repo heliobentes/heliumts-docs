@@ -37,7 +37,7 @@ export default function Nav() {
                         <code>replace</code> (boolean): Use <code>history.replace</code> instead of <code>history.push</code>
                     </li>
                     <li>
-                        <code>prefetch</code> (boolean, default: <code>true</code>): Prefetch page on hover for faster navigation
+                        <code>prefetch</code> (boolean, default: <code>true</code>): Call the route preload hook on hover and focus
                     </li>
                     <li>
                         <code>scrollToTop</code> (boolean, default: <code>true</code>): Scroll to top of page after navigation
@@ -199,7 +199,7 @@ export default function ProtectedPage() {
                 <Heading level={2}>Best Practices</Heading>
                 <ol className="list-decimal list-inside space-y-2 ml-4">
                     <li>
-                        <strong>Use Link for internal navigation</strong>: Enables SPA navigation, prefetching, and better performance
+                        <strong>Use Link for internal navigation</strong>: Keeps navigation in the app and calls route preload hooks
                     </li>
                     <li>
                         <strong>Use router.replace for redirects</strong>: Prevents unwanted back button entries

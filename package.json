@@ -8,12 +8,13 @@
         "build": "helium build",
         "start": "helium start",
         "lint": "eslint .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "test": "node --test tests/benchmark.test.mjs"
     },
     "dependencies": {
         "@tabler/icons-react": "^3.35.0",
         "@tailwindcss/vite": "^4.1.17",
-        "heliumts": "^0.9.6",
+        "heliumts": "^0.9.7",
         "prism-react-renderer": "^2.4.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",

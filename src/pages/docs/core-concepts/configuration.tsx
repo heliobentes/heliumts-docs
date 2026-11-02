@@ -88,10 +88,10 @@ export default config;`}
             />
             <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>
-                    <code>websocket</code> (default): lowest latency after connection warm-up.
+                    <code>websocket</code> (default): shares a persistent WebSocket connection across calls.
                 </li>
                 <li>
-                    <code>http</code>: stateless request/response transport per call.
+                    <code>http</code>: sends RPC calls in HTTP requests; the browser can reuse HTTP connections.
                 </li>
                 <li>
                     <code>auto</code>: chooses transport based on network and device conditions.
@@ -121,7 +121,9 @@ export default config;`}
                 language="typescript"
             />
             <p>
-                Compression uses WebSocket per-message deflate. Messages smaller than <code>threshold</code> are not compressed to avoid unnecessary overhead.
+                These WebSocket settings control framework gzip and negotiated per-message deflate: responses at or below <code>threshold</code> skip both stages, and
+                <code> enabled: false</code> disables both. HTTP RPC response compression is negotiated separately through <code>Accept-Encoding</code>. Compression can reduce
+                transferred bytes while adding CPU work; compare response times and wire sizes for your payloads.
             </p>
 
             <Heading level={3} className="mt-6">

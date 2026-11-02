@@ -39,8 +39,8 @@ export default function Home() {
         <main className="space-y-6 p-4">
             <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 lg:gap-16 lg:py-8">
                 <div className="flex flex-col justify-center items-center lg:items-start py-10 lg:col-span-3">
-                    <span className="text-teal-600 text-sm font-medium text-center lg:text-left">🚀 Up to 2x faster than HTTP</span>
-                    <h1 className="text-4xl font-semibold w-full my-2 text-center lg:text-left">Blazing fast and opinionated full-stack React + Vite framework</h1>
+                    <span className="text-teal-600 text-sm font-medium text-center lg:text-left">Type-safe server methods for React</span>
+                    <h1 className="text-4xl font-semibold w-full my-2 text-center lg:text-left">Build full stack React apps with Vite and typed RPC</h1>
                     <p className="text-lg text-gray-500 text-center lg:text-left">
                         Designed for simplicity and type safety, it provides seamless RPC, file-based routing, SSR, and SSG.
                     </p>
@@ -55,18 +55,22 @@ export default function Home() {
                         <span className="border-2 border-gray-400 rounded-full size-3" />
                     </div>
                     <div className="flex gap-3 my-4 text-sm">
-                        <div
+                        <button
+                            type="button"
+                            aria-pressed={file === "server"}
                             className={cn("text-medium rounded-full px-3 py-1 cursor-pointer  transition-all", file === "server" ? "bg-teal-600 text-white" : "hover:bg-gray-300")}
                             onClick={() => setFile("server")}
                         >
                             /server/tasks.ts
-                        </div>
-                        <div
+                        </button>
+                        <button
+                            type="button"
+                            aria-pressed={file === "pages"}
                             className={cn("text-medium rounded-full px-3 py-1 cursor-pointer  transition-all", file === "pages" ? "bg-teal-600 text-white" : "hover:bg-gray-300")}
                             onClick={() => setFile("pages")}
                         >
                             /pages/tasks.tsx
-                        </div>
+                        </button>
                     </div>
 
                     <CodeBlock code={file === "server" ? serverCode : clientCode} language={file === "server" ? "ts" : "tsx"} />
@@ -76,50 +80,28 @@ export default function Home() {
                 </div>
             </div>
             <div className="pt-10 border-t border-gray-200">
-                <h2 className="text-3xl font-semibold text-center my-6">🚀 Up to 2x faster than HTTP</h2>
+                <h2 className="text-3xl font-semibold text-center my-6">Typed server calls over shared connections</h2>
                 <p className="text-lg text-gray-500 text-center mt-2 max-w-3xl mx-auto">
-                    HeliumTS replaces traditional HTTP requests with a high-performance binary protocol over WebSockets. By eliminating handshake overhead and minimizing payload
-                    size, it delivers significantly lower latency and superior throughput.
+                    Use the same typed API for queries and mutations over a persistent WebSocket connection or HTTP. Your network, payload, compression, and hosting path determine
+                    how quickly each call completes.
+                </p>
+                <p className="text-gray-500 text-center mt-4 max-w-3xl mx-auto">
+                    MessagePack can reduce payload size, but fewer bytes do not guarantee lower latency. HTTP/2 and HTTP/3 also reuse connections, so compare both transports on the
+                    networks and deployment your app uses.
                 </p>
 
                 <div className="py-10 max-w-4xl mx-auto">
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <thead>
-                                <tr className="bg-gray-50 border-b border-gray-200">
-                                    <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Network</th>
-                                    <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RPC Avg (ms)</th>
-                                    <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HTTP Avg (ms)</th>
-                                    <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Improvement</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                <tr>
-                                    <td className="py-4 px-6 text-sm font-medium text-gray-900">Fast Internet</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">150</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">170</td>
-                                    <td className="py-4 px-6 text-sm text-green-600 font-semibold">1.1x</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-4 px-6 text-sm font-medium text-gray-900">Slow 4G</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">390</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">600</td>
-                                    <td className="py-4 px-6 text-sm text-green-600 font-semibold">1.5x</td>
-                                </tr>
-                                <tr>
-                                    <td className="py-4 px-6 text-sm font-medium text-gray-900">3G</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">970</td>
-                                    <td className="py-4 px-6 text-sm text-gray-500">2120</td>
-                                    <td className="py-4 px-6 text-sm text-green-600 font-semibold">2.2x</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p className="text-gray-400 text-xs text-center mt-2">Test made by listing 1000 tasks from the database 50x</p>
-                    <div className="mt-8 text-center">
-                        <Link href="/speed-test" className="button primary">
-                            Test it yourself
-                        </Link>
+                    <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+                        <h3 className="text-xl font-semibold mb-3">Try the live benchmark</h3>
+                        <p className="text-gray-500 max-w-2xl mx-auto">
+                            Compare request, transfer, and decoding time for 1,000 deterministic tasks held in memory. This measures transport behavior without database work;
+                            results vary with your connection and the servers between you and the app.
+                        </p>
+                        <div className="mt-6">
+                            <Link href="/speed-test" className="button primary">
+                                Run the benchmark
+                            </Link>
+                        </div>
                     </div>
                 </div>
 
@@ -129,14 +111,14 @@ export default function Home() {
                             <IconBolt size={32} />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Zero-API Boilerplate</h3>
-                        <p className="text-gray-500">Call server functions directly from your client components. No fetch, no axios, no glue code.</p>
+                        <p className="text-gray-500">Call typed server methods from your components with useFetch and useCall, without writing custom request plumbing.</p>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
                             <IconFileTypeTs size={32} />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">End-to-End Type Safety</h3>
-                        <p className="text-gray-500">Automatic type inference from server to client. If it compiles, it works.</p>
+                        <p className="text-gray-500">Infer method arguments and results from server to client while keeping runtime validation in your server handlers.</p>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <div className="bg-teal-100 p-3 rounded-full mb-4 text-teal-600">
