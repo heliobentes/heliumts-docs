@@ -127,7 +127,7 @@ export const menuItems: MenuSection[] = [
         items: [
             { title: "Authentication", icon: IconShield, href: "/docs/guides/authentication" },
             { title: "Stripe Integration", icon: IconCloudDollar, href: "/docs/guides/stripe" },
-            { title: "LLM Streaming", icon: IconSparkles, href: "/docs/guides/openai" },
+            { title: "OpenAI Streaming", icon: IconSparkles, href: "/docs/guides/openai" },
         ],
     },
     {

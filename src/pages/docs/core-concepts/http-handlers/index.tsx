@@ -29,7 +29,7 @@ export default function HttpHandlersOverview() {
                             <Link href="/docs/core-concepts/http-handlers/examples" className="underline hover:text-teal-900">
                                 Examples
                             </Link>{" "}
-                            - Stripe webhooks, OpenAI streaming, auth handlers
+                            - Stripe webhooks, auth handlers, file uploads, and SSE
                         </li>
                     </ul>
                 </div>

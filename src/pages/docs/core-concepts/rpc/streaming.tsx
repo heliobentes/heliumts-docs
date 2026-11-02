@@ -111,9 +111,9 @@ export default function Reply() {
             </p>
             <p>
                 <Link href="/docs/guides/openai" className="text-teal-600 underline">
-                    See the provider-agnostic LLM recipe
+                    See the OpenAI useStreaming example
                 </Link>{" "}
-                to forward a provider's async text stream without changing the component API.
+                for a complete server method and React component, including upstream cancellation and partial errors.
             </p>
         </div>
     );

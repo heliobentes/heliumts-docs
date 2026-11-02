@@ -4,47 +4,95 @@ import { Link } from "heliumts/client";
 import CodeBlock from "../../../components/CodeBlock";
 import Heading from "../../../components/Heading";
 
-export default function LLMStreaming() {
+export default function OpenAIStreaming() {
     return (
         <div className="space-y-6">
-            <Heading level={1}>LLM Streaming</Heading>
+            <Heading level={1}>OpenAI Streaming</Heading>
             <p>
-                Keep provider calls and credentials on the server. Forward your provider's async text stream from a typed method and consume it with <code>useStreaming</code>.
-                Helium requires no LLM SDK and the component needs no custom fetch or reader.
+                Stream OpenAI responses through an async-generator <code>defineMethod</code> and render the text with <code>useStreaming</code>. The hook manages the HTTP request,
+                incremental output, cancellation, and component state.
             </p>
             <p>
                 <Link href="/streaming" className="text-teal-600 underline">
-                    Try the deterministic demo first
-                </Link>
-                . It needs no API key or provider account.
+                    Try the deterministic streaming demo
+                </Link>{" "}
+                without an API key or provider account.
             </p>
-            <Heading level={2}>Provider-agnostic server adapter</Heading>
+            <Heading level={2}>Install and configure OpenAI</Heading>
+            <CodeBlock language="bash" code={`npm install openai`} />
             <p>
-                The following recipe assumes an app-defined <code>provider.generate</code> adapter returning <code>{`{ textStream: AsyncIterable<string> }`}</code>. Map its{" "}
-                <code>signal</code> to your provider SDK's cancellation option and configure credentials in server environment variables. The adapter is application code, not a
-                Helium dependency.
+                Set <code>OPENAI_API_KEY</code> in your server environment. Optionally set <code>OPENAI_MODEL</code> to a model available to your project; the example defaults to{" "}
+                <code>gpt-6-astra</code>. Keep these variables server-only.
+            </p>
+            <CodeBlock
+                language="bash"
+                code={`# .env — server only
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_MODEL=gpt-6-astra`}
+            />
+            <Heading level={2}>Define a streaming server method</Heading>
+            <p>
+                Keep the implementation in <code>src/server/assistant.ts</code>. Creating the SDK client inside the handler lets method discovery and builds run without an API key.
+                <code> maxRetries: 0</code> disables SDK retries, so starting another generation is an explicit application action.
             </p>
             <CodeBlock
                 language="typescript"
                 code={`// src/server/assistant.ts
 import { defineMethod, PublicError } from "heliumts/server";
-import { provider } from "../lib/provider"; // Your server-side adapter.
+import OpenAI from "openai";
 
 export const streamAssistant = defineMethod(async function* (
     { prompt }: { prompt: string }, ctx
 ) {
-    if (!prompt.trim()) throw new PublicError("Enter a prompt.");
-    const result = await provider.generate({ prompt, signal: ctx.signal });
-    for await (const text of result.textStream) {
-        if (ctx.signal.aborted) return;
-        yield text;
+    if (typeof prompt !== "string" || !prompt.trim()) {
+        throw new PublicError("Enter a prompt.");
+    }
+
+    const openai = new OpenAI({ maxRetries: 0 });
+    const stream = await openai.responses.create(
+        {
+            model: process.env.OPENAI_MODEL || "gpt-6-astra",
+            input: prompt.trim(),
+            stream: true,
+        },
+        { signal: ctx.signal },
+    );
+
+    let completed = false;
+    try {
+        for await (const event of stream) {
+            if (event.type === "response.output_text.delta" ||
+                event.type === "response.refusal.delta") {
+                yield event.delta;
+            } else if (event.type === "response.completed") {
+                completed = true;
+            } else if (event.type === "error" ||
+                event.type === "response.failed" ||
+                event.type === "response.incomplete") {
+                throw new PublicError("The response could not be completed. Try again.");
+            }
+        }
+        if (!completed && !ctx.signal.aborted) {
+            throw new PublicError("The response ended before completion. Try again.");
+        }
+    } finally {
+        stream.controller.abort();
     }
 });`}
             />
-            <Heading level={2}>React component</Heading>
+            <p>
+                The generator yields text deltas, including refusal text, and reports failed, incomplete, or prematurely ended responses as safe public errors. It closes the
+                upstream stream in <code>finally</code>. The same pattern works with any provider that exposes an async iterable.
+            </p>
+            <Heading level={2}>Render the stream with useStreaming</Heading>
+            <p>
+                Import the generated method stub from <code>heliumts/server</code> in the component. The OpenAI SDK and API key stay on the server. The hook infers the prompt
+                argument and string chunk type from the method.
+            </p>
             <CodeBlock
                 language="tsx"
-                code={`import { useState } from "react";
+                code={`// src/pages/assistant.tsx
+import { useState } from "react";
 import { useStreaming } from "heliumts/client";
 import { streamAssistant } from "heliumts/server";
 
@@ -58,12 +106,17 @@ export default function Assistant() {
             event.preventDefault();
             void start({ prompt });
         }}>
-            <label>Prompt <input value={prompt}
-                onChange={(event) => setPrompt(event.target.value)} /></label>
-            <button disabled={!prompt.trim()}>{isStreaming ? "Restart" : "Send"}</button>
-            <button type="button" onClick={cancel}>Cancel</button>
+            <label htmlFor="assistant-prompt">Prompt</label>
+            <input id="assistant-prompt" value={prompt}
+                onChange={(event) => setPrompt(event.target.value)} />
+            <button type="submit" disabled={!prompt.trim()}>
+                {isStreaming ? "Restart" : "Send"}
+            </button>
+            <button type="button" disabled={!isStreaming} onClick={cancel}>
+                Cancel
+            </button>
             <button type="button" onClick={reset}>Reset</button>
-            <output>{text}</output>
+            <output aria-live="polite" style={{ whiteSpace: "pre-wrap" }}>{text}</output>
             {error && <p role="alert">{error}</p>}
         </form>
     );
@@ -71,18 +124,24 @@ export default function Assistant() {
             />
             <Heading level={2}>Cancellation and partial failures</Heading>
             <p>
-                Cancel, restart, and unmount abort the active HTTP stream. Passing <code>ctx.signal</code> upstream lets the provider stop its own work. Already received text
-                remains visible on cancellation or failure; show the hook's string <code>error</code> separately. A stream is never automatically replayed, so a failed generation
-                does not silently start and charge for another request.
+                Cancel, restart, and unmount abort the active request. Passing <code>ctx.signal</code> to the OpenAI SDK lets that cancellation stop upstream work. Received text
+                remains visible after cancellation or failure; render the hook's <code>error</code> separately. Restart clears the old reply, and reset cancels and clears all
+                output.
             </p>
             <p>
-                Apply your auth, input validation, quotas, and provider-specific error handling in method middleware and the server adapter. Use a positive <code>timeoutMs</code>{" "}
-                when you need a different idle limit, and ensure hosting proxies flush chunks instead of buffering the complete reply.
+                Apply application authentication and quotas in method middleware before exposing a provider-backed method. Use a positive <code>timeoutMs</code> to change the idle
+                limit, and configure hosting proxies to flush chunks as they arrive.
             </p>
             <p>
+                See the{" "}
                 <Link href="/docs/core-concepts/rpc/streaming" className="text-teal-600 underline">
-                    See all useStreaming fields, callbacks, and lifecycle behavior.
-                </Link>
+                    useStreaming reference
+                </Link>{" "}
+                for fields, callbacks, and lifecycle behavior, and the{" "}
+                <a href="https://developers.openai.com/api/docs/guides/streaming-responses" target="_blank" rel="noopener noreferrer" className="text-teal-600 underline">
+                    official OpenAI streaming documentation
+                </a>{" "}
+                for provider event types.
             </p>
         </div>
     );

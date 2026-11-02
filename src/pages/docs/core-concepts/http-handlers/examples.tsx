@@ -1,5 +1,7 @@
 "use ssg";
 
+import { Link } from "heliumts/client";
+
 import CodeBlock from "../../../../components/CodeBlock";
 import Heading from "../../../../components/Heading";
 
@@ -72,106 +74,13 @@ export const stripeWebhook = defineHTTPRequest("POST", "/webhooks/stripe", async
 
             <section className="space-y-4">
                 <Heading level={2}>OpenAI Streaming</Heading>
-                <p>Stream OpenAI chat completions to the client:</p>
-                <CodeBlock
-                    code={`import { defineHTTPRequest } from "heliumts/server";
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
-export const chatCompletionStream = defineHTTPRequest("POST", "/api/chat/stream", async (req, ctx) => {
-    const { message } = (await req.json()) as { message: string };
-    
-    if (!message) {
-        return new Response(JSON.stringify({ error: "Message is required" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    
-    try {
-        const stream = await openai.chat.completions.create({
-            model: "gpt-4",
-            messages: [{ role: "user", content: message }],
-            stream: true,
-        });
-        
-        // Create a ReadableStream from the OpenAI stream
-        const readableStream = new ReadableStream({
-            async start(controller) {
-                try {
-                    for await (const chunk of stream) {
-                        const content = chunk.choices[0]?.delta?.content || "";
-                        if (content) {
-                            // Send as SSE format
-                            const data = \`data: \${JSON.stringify({ content })}\\n\\n\`;
-                            controller.enqueue(new TextEncoder().encode(data));
-                        }
-                    }
-                    controller.enqueue(new TextEncoder().encode("data: [DONE]\\n\\n"));
-                    controller.close();
-                } catch (error) {
-                    controller.error(error);
-                }
-            },
-        });
-        
-        return new Response(readableStream, {
-            status: 200,
-            headers: {
-                "Content-Type": "text/event-stream",
-                "Cache-Control": "no-cache",
-                Connection: "keep-alive",
-            },
-        });
-    } catch (error) {
-        console.error("OpenAI API error:", error);
-        
-        return new Response(
-            JSON.stringify({ error: "Failed to get completion" }),
-            {
-                status: 500,
-                headers: { "Content-Type": "application/json" },
-            }
-        );
-    }
-});`}
-                    language="typescript"
-                />
-
-                <Heading level={3}>Client-Side Consumption</Heading>
-                <CodeBlock
-                    code={`// React component consuming the stream
-async function streamChat(message: string) {
-    const response = await fetch("/api/chat/stream", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
-    });
-    
-    const reader = response.body?.getReader();
-    const decoder = new TextDecoder();
-    
-    while (reader) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        const text = decoder.decode(value);
-        const lines = text.split("\\n");
-        
-        for (const line of lines) {
-            if (line.startsWith("data: ") && line !== "data: [DONE]") {
-                const json = JSON.parse(line.slice(6));
-                // Append content to UI
-                console.log(json.content);
-            }
-        }
-    }
-}`}
-                    language="typescript"
-                />
+                <p>
+                    For typed OpenAI text streaming with <code>defineMethod</code> and <code>useStreaming</code>, follow the{" "}
+                    <Link href="/docs/guides/openai" className="text-teal-600 underline">
+                        OpenAI streaming guide
+                    </Link>
+                    .
+                </p>
             </section>
 
             <section className="space-y-4">
