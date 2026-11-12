@@ -41,9 +41,6 @@ export const auth = betterAuth({
         // Optional: if you don't provide a client, database transactions won't be enabled.
         client,
     }),
-    experimental: {
-        joins: true,
-    },
     // Disable the cookie cache so server always validates session state against
     // the database. This prevents the server from returning a stale session
     // when the DB session was manually deleted or revoked elsewhere.

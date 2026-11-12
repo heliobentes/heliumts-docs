@@ -26,7 +26,8 @@ export default function ProjectStructure() {
       queueConsumer.ts
     _middleware.ts   # Server middleware
   components/        # React components
-  types/             # Shared types
+  rpc.generated.ts   # Generated RPC references for browser imports (0.11)
+  types/             # Shared application types
 helium.config.ts     # Helium configuration
 package.json         # NPM package file
 vite.config.ts       # Vite configuration`}

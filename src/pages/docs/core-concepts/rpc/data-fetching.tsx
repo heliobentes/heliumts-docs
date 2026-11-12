@@ -21,8 +21,9 @@ export default function RPCDataFetching() {
                 Basic Usage
             </Heading>
             <CodeBlock
-                code={`import { useFetch } from "heliumts/client";
-import { getTasks } from "heliumts/server";
+                code={`// src/components/TaskList.tsx
+import { useFetch } from "heliumts/client";
+import { getTasks } from "../rpc.generated";
 
 function TaskList() {
     const { data, isLoading, error } = useFetch(getTasks, { status: "open" });

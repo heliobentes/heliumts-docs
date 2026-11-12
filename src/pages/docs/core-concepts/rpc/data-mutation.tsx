@@ -23,36 +23,50 @@ export default function RPCDataMutation() {
                 Basic Usage
             </Heading>
             <CodeBlock
-                code={`import { useCall } from "heliumts/client";
-import { createTask } from "heliumts/server";
+                code={`// src/components/CreateTaskForm.tsx
+import { useCall } from "heliumts/client";
+import { createTask, getTasks } from "../rpc.generated";
 
 function CreateTaskForm() {
-    const { call, isCalling, error } = useCall(createTask);
+    const save = useCall(createTask, { invalidate: [getTasks] });
 
     const handleSubmit = async (name: string) => {
-        const result = await call({ name });
-        if (result) {
-            console.log("Task created:", result);
+        const result = await save.submit({ name });
+        if (result.status === "success") {
+            console.log("Task created:", result.data);
         }
+        // error: save.error is displayed below; busy: no second request.
     };
 
     return (
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                handleSubmit(e.target.taskName.value);
+                const form = new FormData(e.currentTarget);
+                void handleSubmit(String(form.get("taskName") ?? ""));
             }}
         >
-            <input name="taskName" placeholder="Task name" />
-            <button type="submit" disabled={isCalling}>
-                {isCalling ? "Creating..." : "Create Task"}
+            <label htmlFor="task-name">Task name</label>
+            <input id="task-name" name="taskName" required />
+            <button type="submit" disabled={save.isCalling}>
+                {save.isCalling ? "Creating..." : "Create Task"}
             </button>
-            {error && <p className="error">{error}</p>}
+            {save.error && <p role="alert">{save.error}</p>}
         </form>
     );
 }`}
                 language="typescript"
             />
+
+            <p>
+                <code>submit</code> returns a typed success, error or busy outcome and suppresses another submission while this hook has a pending call. It does not provide server
+                idempotency or deduplication across components. Invalidation starts the normal eventual refresh; it does not wait for every related read. An error after a callback
+                failure does not prove that a committed write was rolled back.
+            </p>
+            <p>
+                Use <code>call</code> for concurrent or advanced promise flows. It rejects on failure, so catch its promise in event handlers. <code>submit</code> is available in
+                the 0.11.0 release.
+            </p>
 
             <Heading level={3} className="mt-6">
                 Return Values
@@ -67,6 +81,15 @@ function CreateTaskForm() {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td className="px-6 py-4 text-sm">
+                                <code>submit</code>
+                            </td>
+                            <td className="px-6 py-4 text-sm">
+                                <code>Promise&lt;SubmitResult&lt;TResult&gt;&gt;</code>
+                            </td>
+                            <td className="px-6 py-4 text-sm">Handled success, error or busy outcome for ordinary forms</td>
+                        </tr>
                         <tr className="hover:bg-gray-50">
                             <td className="px-6 py-4 text-sm text-gray-900">
                                 <code>call</code>
@@ -135,7 +158,7 @@ function CreateTaskForm() {
                                 <code>invalidate</code>
                             </td>
                             <td className="px-6 py-4 text-sm text-gray-600">
-                                <code>MethodStub[]</code>
+                                <code>MethodReference[]</code>
                             </td>
                             <td className="px-6 py-4 text-sm text-gray-600">
                                 Array of methods whose cached data should be invalidated after a successful call. This triggers automatic refetch for all <code>useFetch</code>{" "}

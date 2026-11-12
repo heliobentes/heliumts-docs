@@ -14,7 +14,10 @@ export default function Installation() {
                 Installation
             </Heading>
 
-            <p>Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. The examples below target HeliumTS 0.10.2.</p>
+            <p>
+                Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. This page targets the HeliumTS 0.11.0 release. Its generated RPC module, input parser and new CLI commands
+                require matching 0.11.0 framework and scaffolder versions.
+            </p>
 
             <div className="flex gap-3 my-4 text-sm">
                 <button
@@ -43,23 +46,22 @@ export default function Installation() {
 
             {mode === "default" ? (
                 <>
+                    <CodeBlock code={`npm create heliumts-app@latest my-app\ncd my-app\nnpm run dev`} language="bash" />
+
                     <p>
-                        The fastest way to start is with the official scaffolding tool. It creates a working HeliumTS project with the runtime, routing, and build setup already
-                        wired up.
+                        The 0.11.0 release defaults to a minimal app with one page, one RPC method, and plain CSS. Add <code>-- --template examples</code> to the scaffold command
+                        to include the demo with 0.11.0. Use matching 0.11.0 framework and scaffolder versions.
                     </p>
-
-                    <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
-                        Usage
-                    </Heading>
-                    <CodeBlock code="npm create heliumts-app@latest my-app" language="bash" />
-
-                    <p className="mt-4">Or to scaffold in the current directory:</p>
-                    <CodeBlock code="npm create heliumts-app@latest ." language="bash" />
+                    <p>
+                        To scaffold in the current directory, use <code>.</code> as the app name and run <code>npm run dev</code> there.
+                    </p>
 
                     <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
                         Options
                     </Heading>
-                    <p>You can use flags to skip prompts:</p>
+                    <p>
+                        Pass scaffold flags after <code>--</code> when using <code>npm create</code>.
+                    </p>
                     <div className="overflow-x-auto my-4 border border-gray-200 rounded-lg">
                         <table className="min-w-full text-sm text-left">
                             <thead className="bg-gray-50 border-b border-gray-200">
@@ -70,54 +72,26 @@ export default function Installation() {
                             </thead>
                             <tbody className="divide-y divide-gray-100 bg-white">
                                 <tr>
+                                    <td className="px-4 py-2 font-mono text-teal-600">--template minimal | examples</td>
+                                    <td className="px-4 py-2">Choose the minimal default or the larger demo</td>
+                                </tr>
+                                <tr>
+                                    <td className="px-4 py-2 font-mono text-teal-600">--skip-install</td>
+                                    <td className="px-4 py-2">
+                                        Create files and run <code>npm install</code> yourself before starting the app
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td className="px-4 py-2 font-mono text-teal-600">--tailwind</td>
-                                    <td className="px-4 py-2">Use Tailwind CSS template (skips prompt)</td>
+                                    <td className="px-4 py-2">Use Tailwind CSS</td>
                                 </tr>
                                 <tr>
                                     <td className="px-4 py-2 font-mono text-teal-600">--no-tailwind</td>
-                                    <td className="px-4 py-2">Use basic template without Tailwind (skips prompt)</td>
+                                    <td className="px-4 py-2">Use plain CSS</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <CodeBlock
-                        code={`# Use Tailwind CSS (default, skips prompt)
-npm create heliumts-app@latest my-app -- --tailwind
-
-# Use basic template without Tailwind (skips prompt)
-npm create heliumts-app@latest my-app -- --no-tailwind`}
-                        language="bash"
-                    />
-
-                    <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
-                        What it does
-                    </Heading>
-                    <ul className="list-disc list-inside space-y-2 ml-2 text-gray-700">
-                        <li>
-                            Asks if you want to use <strong>Tailwind CSS</strong> (defaults to Yes)
-                        </li>
-                        <li>
-                            Scaffolds a complete HeliumTS project with one of two templates:
-                            <ul className="list-disc list-inside ml-6 mt-1 text-gray-600">
-                                <li>
-                                    <code>tailwind</code> - HeliumTS with Tailwind CSS pre-configured (default)
-                                </li>
-                                <li>
-                                    <code>basic</code> - Standard HeliumTS setup
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            Automatically runs <code>npm install</code>
-                        </li>
-                        <li>Leaves you with a project ready for RPC methods, file-based routing, and optional SSR or SSG pages.</li>
-                    </ul>
-
-                    <Heading level={3} className="text-xl font-semibold text-gray-900 mt-6">
-                        After Installation
-                    </Heading>
-                    <CodeBlock code={`cd my-app\nnpm run dev`} language="bash" />
                 </>
             ) : (
                 <>
@@ -132,7 +106,7 @@ npm create heliumts-app@latest my-app -- --no-tailwind`}
                         2. Install HeliumTS
                     </Heading>
                     <CodeBlock
-                        code={`npm install heliumts@^0.10.2
+                        code={`npm install heliumts@^0.11.0
 npm install --save-dev vite@^7.3.7`}
                         language="bash"
                     />
@@ -201,10 +175,11 @@ export default function App({ Component, pageProps }: AppShellProps) {
 
                     <div className="prose prose-teal max-w-none">
                         <div className="bg-yellow-50 border border-yellow-600 text-yellow-900 rounded-lg px-4 py-3 mb-6 text-sm">
-                            <strong>Note:</strong>
+                            <strong>RPC imports by version</strong>
                             <p>
-                                Helium generates RPC types when you run <code>npx helium dev</code> or <code>npx helium build</code>. Keep the generated{" "}
-                                <code>src/types/heliumts-server.d.ts</code> file included in your TypeScript project.
+                                Version 0.10.2 generates <code>src/types/heliumts-server.d.ts</code> for browser RPC imports from <code>heliumts/server</code>. To upgrade to
+                                0.11.0, switch browser RPC imports to <code>src/rpc.generated.ts</code>, delete the old generated declaration, and run <code>npx helium check</code>
+                                .
                             </p>
                         </div>
                     </div>

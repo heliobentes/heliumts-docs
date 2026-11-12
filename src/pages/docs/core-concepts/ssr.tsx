@@ -94,7 +94,7 @@ export default function DashboardPage() {
 
             <p>
                 Page modules also run in the browser. Put database access, credentials, and authorization in a <code>.server.ts</code> sidecar or in <code>src/server</code>.
-                Browser code should import RPC method stubs from <code>heliumts/server</code>, rather than directly importing files under <code>src/server</code>.
+                Browser code can use RPC references from <code>src/rpc.generated.ts</code> in HeliumTS 0.11.0.
             </p>
 
             <Heading level={3} className="mt-6">

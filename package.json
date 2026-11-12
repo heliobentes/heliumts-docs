@@ -9,12 +9,15 @@
         "start": "helium start",
         "lint": "eslint .",
         "preview": "vite preview",
-        "test": "node --test tests/streaming.test.mjs"
+        "test": "node --test tests/*.test.mjs && npm run docs:check",
+        "docs:sync": "node scripts/sync-agent-guide.mjs",
+        "docs:check": "node scripts/sync-agent-guide.mjs --check",
+        "check": "helium check && npm test"
     },
     "dependencies": {
         "@tabler/icons-react": "^3.35.0",
         "@tailwindcss/vite": "^4.1.17",
-        "heliumts": "^0.10.2",
+        "heliumts": "^0.11.0",
         "prism-react-renderer": "^2.4.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",

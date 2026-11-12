@@ -8,7 +8,8 @@ export const streamText = defineMethod(async function* (args: { prompt: string; 
     if (!prompt) {
         throw new PublicError("Enter a short prompt to start the demo.");
     }
-    const words = `Hello ${prompt}. Helium sends these typed chunks over HTTP. Cancel to keep the partial reply, or start again for a fresh response.`.match(/\S+\s*/g) ?? [];
+    const reply = `You sent this message.\n\n“${prompt}”\n\nThis reply arrives one chunk at a time over HTTP. If you stop it midway, the text received so far stays on screen.`;
+    const words = reply.match(/\S+\s*/g) ?? [];
     for (let index = 0; index < words.length; index++) {
         if (ctx.signal.aborted) {
             return;

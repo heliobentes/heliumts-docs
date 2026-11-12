@@ -1,0 +1,8 @@
+# HeliumTS
+
+React/Vite framework: typed server methods, generated HTTP RPC references, routing, SSR and SSG.
+Read only the needed short task guide; each includes version and compatibility notes.
+
+- [Short task guide index](https://heliumts.com/ai/index.md)
+
+Full reference: [Markdown](https://heliumts.com/agent-guide.md) | [Human docs](https://heliumts.com/docs/ai)

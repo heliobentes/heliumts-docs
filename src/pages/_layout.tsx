@@ -15,12 +15,12 @@ export default function RootLayout({ children }: LayoutProps) {
         <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col">
             <header className="border-b border-gray-300 bg-white sticky top-0 z-10 ">
                 <div className="container mx-auto px-4 flex items-stretch lg:gap-8 flex-col lg:flex-row h-full ">
-                    <div className="py-2 flex items-center text-2xl font-medium gap-3 cursor-pointer hover:opacity-70" onClick={() => router.push("/")}>
+                    <Link href="/" aria-label="HeliumTS home" className="py-2 flex items-center text-2xl font-medium gap-3 hover:opacity-70">
                         <HeliumLogo />
                         HeliumTS
-                    </div>
+                    </Link>
 
-                    <nav className="lg:ml-auto flex items-center h-16">
+                    <nav aria-label="Main navigation" className="lg:ml-auto flex flex-wrap items-center min-h-14 [&>a]:h-14">
                         <Link
                             href="/"
                             className={cn(
@@ -39,11 +39,16 @@ export default function RootLayout({ children }: LayoutProps) {
                         >
                             Docs
                         </Link>
+                        <Link href="/docs/ai" className="px-4 hover:bg-gray-50 h-full flex items-center text-teal-700 font-semibold">
+                            For agents
+                        </Link>
                         <Link
                             href="https://github.com/heliobentes/heliumts/"
                             target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="HeliumTS on GitHub"
                             className={cn(
-                                "px-4 hover:bg-gray-50 h-full flex items-center transition-all border-b-3 hover:border-teal-600 text-gray-700 hover:text-teal-600 border-transparent"
+                                "hidden px-4 hover:bg-gray-50 h-full items-center transition-all border-b-3 hover:border-teal-600 text-gray-700 hover:text-teal-600 border-transparent sm:flex"
                             )}
                         >
                             <IconBrandGithubFilled className="inline-block size-6 mr-1 -mt-1" />
@@ -52,8 +57,10 @@ export default function RootLayout({ children }: LayoutProps) {
                         <Link
                             href="https://www.npmjs.com/package/heliumts"
                             target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="HeliumTS on npm"
                             className={cn(
-                                "px-4 hover:bg-gray-50 h-full flex items-center transition-all border-b-3 hover:border-teal-600 text-gray-700 hover:text-teal-600 border-transparent"
+                                "hidden px-4 hover:bg-gray-50 h-full items-center transition-all border-b-3 hover:border-teal-600 text-gray-700 hover:text-teal-600 border-transparent sm:flex"
                             )}
                         >
                             <IconBrandNpm className="inline-block size-6 mr-1 -mt-1" />

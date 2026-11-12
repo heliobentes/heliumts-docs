@@ -5,9 +5,10 @@ import { useState } from "react";
 interface CodeBlockProps {
     code: string;
     language: string;
+    compact?: boolean;
 }
 
-export default function CodeBlock({ code, language }: CodeBlockProps) {
+export default function CodeBlock({ code, language, compact = false }: CodeBlockProps) {
     const [copied, setCopied] = useState(false);
 
     const copyToClipboard = async () => {
@@ -27,10 +28,10 @@ export default function CodeBlock({ code, language }: CodeBlockProps) {
             </button>
             <Highlight theme={themes.oneDark} code={code.trim()} language={language}>
                 {({ style, tokens, getLineProps, getTokenProps }) => (
-                    <pre className="p-4 rounded-lg text-sm overflow-x-auto" style={style}>
+                    <pre className={compact ? "rounded-lg p-3 text-sm whitespace-pre-wrap wrap-anywhere" : "p-4 rounded-lg text-sm overflow-x-auto"} style={style}>
                         {tokens.map((line, i) => (
                             <div key={i} {...getLineProps({ line })}>
-                                <span className="inline-block w-4 md:w-8 text-gray-500 select-none text-right mr-4">{language === "bash" ? "%" : i + 1}</span>
+                                {compact ? null : <span className="inline-block w-4 md:w-8 text-gray-500 select-none text-right mr-4">{language === "bash" ? "%" : i + 1}</span>}
                                 {line.map((token, key) => (
                                     <span key={key} {...getTokenProps({ token })} />
                                 ))}

@@ -96,7 +96,7 @@ const { data, stats } = await callMethod(getTasks, { status: "open" });`}
                 <Link href="/docs/core-concepts/rpc/streaming" className="text-teal-600 underline">
                     Read the streaming guide
                 </Link>
-                . The old transport comparison page and its synthetic benchmark endpoints have been removed.
+                .
             </p>
         </div>
     );

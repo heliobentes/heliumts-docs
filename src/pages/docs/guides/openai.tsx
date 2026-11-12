@@ -86,7 +86,7 @@ export const streamAssistant = defineMethod(async function* (
             </p>
             <Heading level={2}>Render the stream with useStreaming</Heading>
             <p>
-                Import the generated method stub from <code>heliumts/server</code> in the component. The OpenAI SDK and API key stay on the server. The hook infers the prompt
+                Import the method reference from <code>src/rpc.generated.ts</code> using HeliumTS 0.11.0. The OpenAI SDK and API key stay on the server. The hook infers the prompt
                 argument and string chunk type from the method.
             </p>
             <CodeBlock
@@ -94,7 +94,7 @@ export const streamAssistant = defineMethod(async function* (
                 code={`// src/pages/assistant.tsx
 import { useState } from "react";
 import { useStreaming } from "heliumts/client";
-import { streamAssistant } from "heliumts/server";
+import { streamAssistant } from "../rpc.generated";
 
 export default function Assistant() {
     const [prompt, setPrompt] = useState("");

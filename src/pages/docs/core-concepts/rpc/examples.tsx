@@ -105,8 +105,9 @@ await refetch(true);`}
             </Heading>
             <p>Automatically refresh related data after a mutation:</p>
             <CodeBlock
-                code={`import { useCall, useFetch } from "heliumts/client";
-import { getTasks, createTask, deleteTask } from "heliumts/server";
+                code={`// src/pages/tasks.tsx
+import { useCall, useFetch } from "heliumts/client";
+import { getTasks, createTask, deleteTask } from "../rpc.generated";
 
 function TaskManager() {
     const { data: tasks } = useFetch(getTasks);

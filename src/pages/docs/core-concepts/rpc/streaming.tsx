@@ -10,7 +10,7 @@ export default function Streaming() {
             <Heading level={1}>Typed Streaming</Heading>
             <p>
                 Use an async generator with the existing <code>defineMethod</code> API, then consume its typed chunks with <code>useStreaming</code>. Helium handles the HTTP
-                request and incremental decoding; your component does not write fetch or reader code.
+                request and incremental decoding of length-prefixed MessagePack frames; your component does not write fetch or reader code.
             </p>
             <p>
                 <Link href="/streaming" className="text-teal-600 underline">
@@ -36,14 +36,15 @@ export const streamReply = defineMethod(async function* (
 });`}
             />
             <p>
-                Keep implementations in <code>src/server</code>. Import generated method stubs from <code>heliumts/server</code> in components. Pass <code>ctx.signal</code> into
-                upstream requests and cancellable work so disconnects and client cancellation stop the producer.
+                Keep implementations in <code>src/server</code>. This component uses the generated <code>src/rpc.generated.ts</code> module from HeliumTS 0.11.0. Pass{" "}
+                <code>ctx.signal</code> into upstream requests and cancellable work so disconnects and client cancellation stop the producer.
             </p>
             <Heading level={2}>React component</Heading>
             <CodeBlock
                 language="tsx"
-                code={`import { useStreaming } from "heliumts/client";
-import { streamReply } from "heliumts/server";
+                code={`// src/pages/reply.tsx
+import { useStreaming } from "heliumts/client";
+import { streamReply } from "../rpc.generated";
 
 export default function Reply() {
     const { chunks, text, isStreaming, error, stats, start, cancel, reset } =

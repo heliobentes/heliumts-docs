@@ -6,7 +6,7 @@ This repository contains the source code for the official documentation of [Heli
 
 The documentation site is built using:
 
-- **HeliumTS 0.10.2**: HTTP-only typed RPC and streaming.
+- **HeliumTS 0.11.0 release**: generated typed HTTP RPC references and length-prefixed MessagePack streaming over HTTP.
 - **React**: UI library.
 - **Vite**: Build tool.
 - **TailwindCSS**: Styling.
@@ -29,7 +29,7 @@ The documentation site is built using:
 
 2. Install dependencies:
     ```bash
-    npm install
+    npm ci
     ```
 
 ### Development
@@ -68,3 +68,13 @@ npm run start
 Open `/streaming` for the deterministic streaming demo. It uses `defineMethod(async function*)` and `useStreaming` without a provider SDK or credentials. The guide is at `/docs/core-concepts/rpc/streaming`; `/docs/getting-started/migration-0-10` explains removed connection APIs and config.
 
 Run `npm test` for the deterministic streaming, cancellation, and partial-error regressions.
+
+## Compact agent reference
+
+The framework's `docs/agent-guide.md` is the single source for `/docs/ai`, `/agent-guide.md` and `/llms.txt`. Run `npm run docs:sync` from a sibling checkout or `npm run docs:sync -- --source=/path/to/agent-guide.md`. `npm run docs:check` detects drift; without a sibling checkout it checks internal consistency against the committed Markdown copy. The full long-form documentation has not been migrated.
+
+## Release and deployment
+
+The website targets HeliumTS 0.11.0. Install the published dependency with `npm ci` and verify `npm test`, `npm run lint`, `npx tsc --noEmit` and `npm run build` before release. The existing DigitalOcean App Platform service `helium-docs` deploys this repository’s `main` branch automatically, builds with `npm run build`, and runs with `npm start`. Preserve that deployment target and verify the deployed commit after pushing.
+
+The homepage and agent workflow describe typed RPC, explicit loading/error/refresh, server input validation and related-read invalidation. Agent guides remain generated from the framework source.
