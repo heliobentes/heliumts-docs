@@ -53,7 +53,8 @@ export const myEndpoint = defineHTTPRequest("GET", "/api/hello", async (req, ctx
             <section className="space-y-4">
                 <Heading level={2}>Dynamic Routes</Heading>
                 <p>
-                    Use <code>:param</code> syntax for dynamic path segments:
+                    Use <code>:param</code> syntax for dynamic path segments. Since 0.11.1, HeliumTS decodes <code>req.params</code> and matches static segments containing accented
+                    characters or spaces. Validate decoded parameters before using them.
                 </p>
                 <CodeBlock
                     code={`export const getUser = defineHTTPRequest("GET", "/api/users/:id", async (req, ctx) => {

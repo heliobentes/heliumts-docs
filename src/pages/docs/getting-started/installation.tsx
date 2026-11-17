@@ -15,8 +15,7 @@ export default function Installation() {
             </Heading>
 
             <p>
-                Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. This page targets the HeliumTS 0.11.0 release. Its generated RPC module, input parser and new CLI commands
-                require matching 0.11.0 framework and scaffolder versions.
+                Use Node.js 20.19+ or 22.12+, React 18 or 19, and Vite 7. Use the 0.11 series of the framework and scaffolder together. These instructions target HeliumTS 0.11.1.
             </p>
 
             <div className="flex gap-3 my-4 text-sm">
@@ -49,8 +48,7 @@ export default function Installation() {
                     <CodeBlock code={`npm create heliumts-app@latest my-app\ncd my-app\nnpm run dev`} language="bash" />
 
                     <p>
-                        The 0.11.0 release defaults to a minimal app with one page, one RPC method, and plain CSS. Add <code>-- --template examples</code> to the scaffold command
-                        to include the demo with 0.11.0. Use matching 0.11.0 framework and scaffolder versions.
+                        The default template has one page, one RPC method, and plain CSS. Add <code>-- --template examples</code> to include the demo.
                     </p>
                     <p>
                         To scaffold in the current directory, use <code>.</code> as the app name and run <code>npm run dev</code> there.
@@ -106,7 +104,7 @@ export default function Installation() {
                         2. Install HeliumTS
                     </Heading>
                     <CodeBlock
-                        code={`npm install heliumts@^0.11.0
+                        code={`npm install heliumts@^0.11.1
 npm install --save-dev vite@^7.3.7`}
                         language="bash"
                     />

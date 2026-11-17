@@ -75,6 +75,6 @@ The framework's `docs/agent-guide.md` is the single source for `/docs/ai`, `/age
 
 ## Release and deployment
 
-The website targets HeliumTS 0.11.0. Install the published dependency with `npm ci` and verify `npm test`, `npm run lint`, `npx tsc --noEmit` and `npm run build` before release. The existing DigitalOcean App Platform service `helium-docs` deploys this repository’s `main` branch automatically, builds with `npm run build`, and runs with `npm start`. Preserve that deployment target and verify the deployed commit after pushing.
+The website targets HeliumTS 0.11.1. Install the published dependency with `npm ci` and verify `npm test`, `npm run lint`, `npx tsc --noEmit` and `npm run build` before release. The existing DigitalOcean App Platform service `helium-docs` deploys this repository’s `main` branch automatically, builds with `npm run build`, and runs with `npm start`. Preserve that deployment target and verify the deployed commit after pushing.
 
 The homepage and agent workflow describe typed RPC, explicit loading/error/refresh, server input validation and related-read invalidation. Agent guides remain generated from the framework source.
